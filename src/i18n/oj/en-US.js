@@ -212,7 +212,7 @@ export const m = {
   Problem_Bank: 'Problem Bank',
   All: 'All',
   My_OI: 'OI',
-  My_OJ: 'CTF',
+  My_CTF: 'CTF',
   Level: 'Level',
   Tags: 'Tags',
   Search_Filter_Tag: 'Enter the tag name...',
