@@ -586,10 +586,10 @@ export default {
         })
         .catch(() => {});
     },
-    downloadTestCase(problemID) {
-      let url = '/api/file/download-testcase?pid=' + problemID;
+    downloadProblemFIle(problemID) {
+      let url = '/api/file/download-problemfile?pid=' + problemID;
       utils.downloadFile(url).then(() => {
-        this.$alert(this.$i18n.t('m.Download_Testcase_Success'), 'Tips');
+        this.$alert(this.$i18n.t('m.Download_ProblemFile_Success'), this.$i18n.t('m.Tips'));
       });
     },
     ProblemListChangeFilter() {

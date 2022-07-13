@@ -23,7 +23,12 @@ function submissionTimeFormat (time) {
   if (time === undefined || time === null || time === '') return '--'
   return time + 'ms'
 }
-
+function downloadProblemFIle(problemID) {
+  let url = '/api/file/download-problemfile?pid=' + problemID;
+  utils.downloadFile(url).then(() => {
+    this.$alert(this.$i18n.t('m.Download_ProblemFile_Success'), this.$i18n.t('m.Tips'));
+  })
+}
 function submissionLengthFormat(length){
   if (length === undefined || length ===null || length === '') return '--'
   return length + 'B'

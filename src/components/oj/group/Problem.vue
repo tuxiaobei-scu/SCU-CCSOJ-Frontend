@@ -716,6 +716,7 @@ export default {
         userExtraFile: '',
         judgeExtraFile: '',
         gid: null,
+        HasFile: '',
       },
       problemTags: [],
       problemLanguages: [],
@@ -800,6 +801,7 @@ export default {
         judgeMode: 'default',
         userExtraFile: null,
         judgeExtraFile: null,
+        HasFile: '',
       };
       if (this.contestId) {
         this.problem.cid = this.reProblem.cid = this.contestId;

@@ -710,6 +710,7 @@ export default {
         judgeMode: 'default',
         userExtraFile: '',
         judgeExtraFile: '',
+        HasFile: '',
       },
       problemTags: [], //指定问题的标签列表
       problemLanguages: [], //指定问题的编程语言列表
@@ -804,6 +805,7 @@ export default {
         judgeMode: 'default',
         userExtraFile: null,
         judgeExtraFile: null,
+        HasFile: '',
       };
 
       this.contestID = contestID;
