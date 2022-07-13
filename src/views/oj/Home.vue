@@ -29,48 +29,48 @@
           </el-carousel>
         </el-card>
         <Announcements class="card-top"></Announcements>
-        <el-card class="card-top">
-          <div slot="header" class="clearfix">
-            <span class="panel-title home-title">{{
-              $t('m.Other_OJ_Contest')
-            }}</span>
-          </div>
-          <vxe-table
-            border="inner"
-            highlight-hover-row
-            stripe
-            :loading="loading.recentOtherContestsLoading"
-            auto-resize
-            :data="otherContests"
-            @cell-click="goOtherOJContest"
-          >
-            <vxe-table-column
-              field="oj"
-              :title="$t('m.Recent_Contest')"
-              min-width="150"
-              show-overflow
-              header-align="center"
-            >
-              <template v-slot="{ row }">
-                <span>[{{ row.oj }}] {{ row.title }}</span>
-              </template>
-            </vxe-table-column>
-            <vxe-table-column
-              field="beginTime"
-              :title="$t('m.Contest_Time')"
-              show-overflow
-              min-width="150"
-              align="center"
-            >
-              <template v-slot="{ row }">
-                <span
-                  >{{ row.beginTime | localtime }} ~
-                  {{ row.endTime | localtime }}</span
-                >
-              </template>
-            </vxe-table-column>
-          </vxe-table>
-        </el-card>
+<!--        <el-card class="card-top">-->
+<!--          <div slot="header" class="clearfix">-->
+<!--            <span class="panel-title home-title">{{-->
+<!--              $t('m.Other_OJ_Contest')-->
+<!--            }}</span>-->
+<!--          </div>-->
+<!--          <vxe-table-->
+<!--            border="inner"-->
+<!--            highlight-hover-row-->
+<!--            stripe-->
+<!--            :loading="loading.recentOtherContestsLoading"-->
+<!--            auto-resize-->
+<!--            :data="otherContests"-->
+<!--            @cell-click="goOtherOJContest"-->
+<!--          >-->
+<!--            <vxe-table-column-->
+<!--              field="oj"-->
+<!--              :title="$t('m.Recent_Contest')"-->
+<!--              min-width="150"-->
+<!--              show-overflow-->
+<!--              header-align="center"-->
+<!--            >-->
+<!--              <template v-slot="{ row }">-->
+<!--                <span>[{{ row.oj }}] {{ row.title }}</span>-->
+<!--              </template>-->
+<!--            </vxe-table-column>-->
+<!--            <vxe-table-column-->
+<!--              field="beginTime"-->
+<!--              :title="$t('m.Contest_Time')"-->
+<!--              show-overflow-->
+<!--              min-width="150"-->
+<!--              align="center"-->
+<!--            >-->
+<!--              <template v-slot="{ row }">-->
+<!--                <span-->
+<!--                  >{{ row.beginTime | localtime }} ~-->
+<!--                  {{ row.endTime | localtime }}</span-->
+<!--                >-->
+<!--              </template>-->
+<!--            </vxe-table-column>-->
+<!--          </vxe-table>-->
+<!--        </el-card>-->
       </el-col>
       <el-col :md="9" :sm="24" class="phone-margin">
         <template v-if="contests.length">
@@ -388,7 +388,7 @@ export default {
     this.getHomeCarousel();
     this.getRecentContests();
     this.getRecent7ACRank();
-    this.getRecentOtherContests();
+    // this.getRecentOtherContests();
   },
   methods: {
     getHomeCarousel() {
@@ -411,18 +411,18 @@ export default {
         }
       );
     },
-    getRecentOtherContests() {
-      this.loading.recentOtherContestsLoading = true;
-      api.getRecentOtherContests().then(
-        (res) => {
-          this.otherContests = res.data.data;
-          this.loading.recentOtherContestsLoading = false;
-        },
-        (err) => {
-          this.loading.recentOtherContestsLoading = false;
-        }
-      );
-    },
+    // getRecentOtherContests() {
+    //   this.loading.recentOtherContestsLoading = true;
+    //   api.getRecentOtherContests().then(
+    //     (res) => {
+    //       this.otherContests = res.data.data;
+    //       this.loading.recentOtherContestsLoading = false;
+    //     },
+    //     (err) => {
+    //       this.loading.recentOtherContestsLoading = false;
+    //     }
+    //   );
+    // },
     getRecent7ACRank() {
       this.loading.recent7ACRankLoading = true;
       api.getRecent7ACRank().then(
