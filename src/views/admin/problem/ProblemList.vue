@@ -56,8 +56,8 @@
                 :label="$t('m.All_Problem')"
                 :value="'All'"
               ></el-option>
-              <el-option :label="$t('m.My_OI')" :value="'Mine'"></el-option>
-              <el-option :label="$t('m.My_CTF')" :value="'Mine'"></el-option>
+              <el-option :label="$t('m.My_OI')" :value="'Mine_OI'"></el-option>
+              <el-option :label="$t('m.My_CTF')" :value="'Mine_CTF'"></el-option>
               <el-option
                 :label="remoteOj.name"
                 :key="index"
