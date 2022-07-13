@@ -172,7 +172,7 @@
       </el-row>
       <el-row :gutter="15">
         <el-col :xs="24" :md="12" style="margin-top: 15px;">
-          <RemoteJudgeAccount 
+          <RemoteJudgeAccount
             :usernameList.sync="switchConfig.hduUsernameList"
             :passwordList.sync="switchConfig.hduPasswordList"
             :loading.sync="loading"
