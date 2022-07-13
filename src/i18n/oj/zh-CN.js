@@ -15,6 +15,7 @@ export const m = {
   NavBar_Rank: '排名',
   NavBar_ACM_Rank: 'ACM 排名',
   NavBar_OI_Rank: 'OI 排名',
+  NavBar_CTF_Rank: 'CTF 排名',
   NavBar_Discussion: '讨论',
   NavBar_Group: '团队',
   NavBar_About: '关于',
@@ -319,6 +320,9 @@ export const m = {
 
   // /views/oj/rank/OIRank.vue
   OI_Ranklist: 'OI 排行榜',
+
+  // /views/oj/rank/CTFRank.vue
+  CTF_Ranklist: 'CTF 排行榜',
 
   // /views/oj/discussion/discussion.vue
   Go_to_problem: '前往原题',

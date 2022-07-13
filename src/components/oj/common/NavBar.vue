@@ -51,6 +51,9 @@
           <el-menu-item index="/oi-rank">{{
             $t('m.NavBar_OI_Rank')
           }}</el-menu-item>
+          <el-menu-item index="/ctf-rank">{{
+              $t('m.NavBar_CTF_Rank')
+            }}</el-menu-item>
         </el-submenu>
 
         <el-menu-item index="/discussion"
@@ -473,6 +476,18 @@
               <mu-list-item-title>{{
                 $t('m.NavBar_OI_Rank')
               }}</mu-list-item-title>
+            </mu-list-item>
+            <mu-list-item
+                button
+                :ripple="false"
+                slot="nested"
+                to="/ctf-rank"
+                @click="opendrawer = !opendrawer"
+                active-class="mobile-menu-active"
+            >
+              <mu-list-item-title>{{
+                  $t('m.NavBar_CTF_Rank')
+                }}</mu-list-item-title>
             </mu-list-item>
           </mu-list-item>
 

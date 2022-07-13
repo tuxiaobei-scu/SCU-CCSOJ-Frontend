@@ -15,6 +15,7 @@ export const m = {
   NavBar_Rank: 'Rank',
   NavBar_ACM_Rank: 'ACM Rank',
   NavBar_OI_Rank: 'OI Rank',
+  NavBar_CTF_Rank: 'CTF Rank',
   NavBar_Discussion: 'Discussion',
   NavBar_Group: 'Group',
   NavBar_About: 'About',
@@ -317,6 +318,9 @@ export const m = {
 
   // /views/oj/rank/OIRank.vue
   OI_Ranklist: 'OI Ranklist',
+
+  // /views/oj/rank/CTFRank.vue
+  CTF_Ranklist: 'CTF Ranklist',
 
   // /views/oj/discussion/discussionList.vue
   Go_to_problem:"Go to Problem",
