@@ -56,7 +56,7 @@
               </p>
               <p>
                 <i class="el-icon-document"></i>
-                <a href="https://docs.hdoi.cn" target="_blank"> {{ $t('m.Help') }}</a>
+                <a href="https://ccs.scu.edu.cn" target="_blank"> {{ $t('m.Help') }}</a>
               </p>
             </el-col>
           </el-row>
