@@ -240,7 +240,8 @@ export const GROUP_TYPE_REVERSE = {
 
 export const RULE_TYPE = {
   ACM: 0,
-  OI: 1
+  OI: 1,
+  CTF: 2
 }
 
 export const CONTEST_TYPE_REVERSE = {

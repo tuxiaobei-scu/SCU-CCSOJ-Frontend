@@ -31,6 +31,7 @@
                   }}</el-dropdown-item>
                   <el-dropdown-item command="0">ACM</el-dropdown-item>
                   <el-dropdown-item command="1">OI</el-dropdown-item>
+                  <el-dropdown-item command="2">CTF</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </span>
@@ -300,6 +301,7 @@ export default {
       CONTEST_TYPE_REVERSE: {},
       acmSrc: require('@/assets/acm.jpg'),
       oiSrc: require('@/assets/oi.jpg'),
+      ctfSrc: require('@/assets/ctf.png'),
       loading: true,
     };
   },

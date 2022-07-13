@@ -329,7 +329,7 @@ export default {
       },
       carouselImgList: [
         {
-          url: 'https://s1.ax1x.com/2022/05/15/ORSjyT.jpg',
+          url: 'https://s1.ax1x.com/2022/07/13/jR5W5V.jpg',
         },
         {
           url: 'https://s1.ax1x.com/2022/05/15/ORp86f.jpg',

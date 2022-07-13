@@ -71,6 +71,14 @@
                   @change="setSealRankTimeDefaultValue"
                   >OI</el-radio
                 >
+                <el-radio
+                    class="radio"
+                    v-model="contest.type"
+                    :label="2"
+                    :disabled="disableRuleType"
+                    @change="setSealRankTimeDefaultValue"
+                >CTF</el-radio
+                >
               </el-form-item>
             </el-col>
             <el-col :md="8" :xs="24">
