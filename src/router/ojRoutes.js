@@ -11,6 +11,7 @@ import Problem from "@/views/oj/problem/Problem.vue"
 import ACMRank from "@/views/oj/rank/ACMRank.vue"
 import OIRank from "@/views/oj/rank/OIRank.vue"
 import CTFRank from "@/views/oj/rank/CTFRank.vue"
+import ALLRank from "@/views/oj/rank/ALLRank.vue"
 import ContestDetails from "@/views/oj/contest/ContestDetails.vue"
 import ACMScoreBoard from "@/views/oj/contest/outside/ACMScoreBoard.vue"
 import OIScoreBoard from "@/views/oj/contest/outside/OIScoreBoard.vue"
@@ -223,6 +224,12 @@ const ojRoutes = [
     name: 'CTF Rank',
     component: CTFRank,
     meta: { title: 'CTF Rank' }
+  },
+  {
+    path: '/all-rank',
+    name: 'ALL Rank',
+    component: ALLRank,
+    meta: { title: 'ALL Rank' }
   },
   {
     path: '/reset-password',

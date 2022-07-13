@@ -16,6 +16,7 @@ export const m = {
   NavBar_ACM_Rank: 'ACM 排名',
   NavBar_OI_Rank: 'OI 排名',
   NavBar_CTF_Rank: 'CTF 排名',
+  NavBar_ALL_Rank: '总排名',
   NavBar_Discussion: '讨论',
   NavBar_Group: '团队',
   NavBar_About: '关于',
