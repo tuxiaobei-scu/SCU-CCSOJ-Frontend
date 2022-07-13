@@ -253,7 +253,13 @@ const ojApi = {
       }
     })
   },
-
+  //下载文件
+  downloadProblemFIle(problemID) {
+    let url = '/api/file/download-problemfile?pid=' + problemID;
+    utils.downloadFile(url).then(() => {
+      this.$alert(this.$i18n.t('m.Download_ProblemFile_Success'), this.$i18n.t('m.Tips'));
+    });
+  },
   // 提交评测模块
   submitCode (data) {
     return ajax('/api/submit-problem-judge', 'post', {

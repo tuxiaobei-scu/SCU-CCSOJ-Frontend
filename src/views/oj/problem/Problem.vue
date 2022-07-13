@@ -240,7 +240,6 @@
                       ></p>
                     </el-card>
                   </template>
-
                   <template v-if="problemData.problem.HasFile">
                     <el-tooltip
                         effect="dark"
@@ -256,7 +255,6 @@
                       </el-button>
                     </el-tooltip>
                   </template>
-
                   <template v-if="problemData.problem.source && !contestID">
                     <p class="title">{{ $t('m.Source') }}</p>
                     <p class="content" v-html="problemData.problem.source"></p>
@@ -896,7 +894,7 @@ export default {
     submissionTimeFormat(time) {
       return utils.submissionTimeFormat(time);
     },
-    downloadProblemFIle(problemID) {
+    downloadProblemFile(problemID) {
       let url = '/api/file/download-problemfile?pid=' + problemID;
       utils.downloadFile(url).then(() => {
         this.$alert(this.$i18n.t('m.Download_ProblemFile_Success'), this.$i18n.t('m.Tips'));
