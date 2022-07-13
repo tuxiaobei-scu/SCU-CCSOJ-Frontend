@@ -212,7 +212,7 @@ export const m = {
   Problem_Bank: '题库',
   All: '全部',
   My_OI: 'OI',
-  My_OJ: 'CTF',
+  My_CTF: 'CTF',
   Level: '难度',
   Tags: '标签',
   Search_Filter_Tag: '输入标签名称...',

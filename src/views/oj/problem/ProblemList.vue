@@ -57,15 +57,27 @@
                 @click="filterByOJ('All')"
                 >{{ $t('m.All') }}</el-tag
               >
+
+              <el-tag
+                  size="medium"
+                  class="filter-item"
+                  :effect="
+                  query.oj === 'Mine_OI' || query.oj === '' ? 'dark' : 'plain'
+                "
+                  @click="filterByOJ('Mine_OI')"
+              >{{ $t('m.My_OI') }}</el-tag
+              >
+
               <el-tag
                 size="medium"
                 class="filter-item"
                 :effect="
-                  query.oj === 'Mine' || query.oj === '' ? 'dark' : 'plain'
+                  query.oj === 'Mine_CTF' || query.oj === '' ? 'dark' : 'plain'
                 "
-                @click="filterByOJ('Mine')"
-                >{{ $t('m.My_OJ') }}</el-tag
+                @click="filterByOJ('Mine_CTF')"
+                >{{ $t('m.My_CTF') }}</el-tag
               >
+
               <el-tag
                 size="medium"
                 class="filter-item"
@@ -410,7 +422,8 @@ export default {
       this.routeName = this.$route.name;
       let query = this.$route.query;
       this.query.difficulty = query.difficulty || '';
-      this.query.oj = query.oj || 'Mine';
+      // this.query.oj = query.oj || 'Mine';
+      this.query.oj = query.oj || 'All';
       this.query.keyword = query.keyword || '';
       try {
         this.query.tagId = JSON.parse(query.tagId);
@@ -494,7 +507,7 @@ export default {
         queryParams.oj = '';
       } else if (!queryParams.oj) {
         queryParams.oj = 'Mine';
-      }
+      } // TODO
       queryParams.tagId = queryParams.tagId + '';
       this.loadings.table = true;
       api.getProblemList(this.limit, queryParams).then(
@@ -655,8 +668,10 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated']),
     OJName() {
-      if (this.query.oj == 'Mine' || !this.$route.query.oj) {
-        return this.$i18n.t('m.My_OJ');
+      if (this.query.oj == 'Mine_CTF' || !this.$route.query.oj) {
+        return this.$i18n.t('m.My_CTF');
+      } else if(this.query.oj == 'Mine_OI') {
+        return this.$i18n.t('m.My_OI')
       } else if (this.query.oj == 'All') {
         return this.$i18n.t('m.All');
       } else {
