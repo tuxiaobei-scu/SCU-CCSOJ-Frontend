@@ -325,6 +325,9 @@ export const m = {
   // /views/oj/rank/CTFRank.vue
   CTF_Ranklist: 'CTF 排行榜',
 
+  // /views/oj/rank/CTFRank.vue
+  ALL_Ranklist: '总排行榜',
+
   // /views/oj/discussion/discussion.vue
   Go_to_problem: '前往原题',
   Release_Time: '发布时间',
