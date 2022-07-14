@@ -209,7 +209,8 @@ export default {
         calendarHeatLocale:null,
         calendarHeatmapValue:[],
         calendarHeatmapEndDate:'',
-        loadingCalendarHeatmap:false
+        loadingCalendarHeatmap:false,
+        rp: 0
       },
     };
   },

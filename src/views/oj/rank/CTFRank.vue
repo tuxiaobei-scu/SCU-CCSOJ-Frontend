@@ -136,7 +136,7 @@ import { mapGetters } from 'vuex';
 import Avatar from 'vue-avatar';
 const Pagination = () => import('@/components/oj/common/Pagination');
 export default {
-  name: 'acm-rank',
+  name: 'ctf-rank',
   components: {
     Pagination,
     Avatar,
@@ -243,7 +243,7 @@ export default {
       let bar = this.$refs.chart;
       bar.showLoading({ maskColor: 'rgba(250, 250, 250, 0.8)' });
       this.loadingTable = true;
-      api.getUserRank(page, this.limit, RULE_TYPE.OI, this.searchUser).then(
+      api.getUserRank(page, this.limit, RULE_TYPE.CTF, this.searchUser).then(
         (res) => {
           if (page === 1) {
             this.changeCharts(res.data.data.records.slice(0, 10));

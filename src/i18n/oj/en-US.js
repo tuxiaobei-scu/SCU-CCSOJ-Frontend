@@ -208,6 +208,7 @@ export const m = {
   Total: 'Total',
   AC_Rate: 'AC Rate',
   Score: 'Score',
+  rp: 'rp',
 
   // /views/oj/problem/problemList.vue
   Problem_List: 'Problem List',

@@ -6,7 +6,7 @@
           <span class="panel-title">{{ $t('m.ALL_Ranklist') }}</span>
         </div>
         <div class="echarts">
-          <ECharts :options="options" ref="chart" auto-resize></ECharts>
+          <ECharts :options="options" ref="chart" auto-resize="true"></ECharts>
         </div>
       </el-card>
       <el-card :padding="10" style="text-align: center;">
@@ -77,29 +77,9 @@
             </el-tag>
           </template>
         </vxe-table-column>
-        <vxe-table-column :title="$t('m.Score')" min-width="80">
+        <vxe-table-column :title="$t('m.rp')" min-width="80">
           <template v-slot="{ row }">
-            <span>{{ row.score }}</span>
-          </template>
-        </vxe-table-column>
-        <vxe-table-column
-          :title="$t('m.AC') + '/' + $t('m.Total')"
-          min-width="100"
-        >
-          <template v-slot="{ row }">
-            <span>
-              <a
-                @click="goUserACStatus(row.username)"
-                style="color:rgb(87, 163, 243);"
-                >{{ row.ac }}</a
-              >
-              <span>/{{ row.total }}</span>
-            </span>
-          </template>
-        </vxe-table-column>
-        <vxe-table-column :title="$t('m.Rating')" min-width="80">
-          <template v-slot="{ row }">
-            <span>{{ getACRate(row.ac, row.total) }}</span>
+            <span>{{ row.rp }}</span>
           </template>
         </vxe-table-column>
         <vxe-table-column
@@ -136,7 +116,7 @@ import { mapGetters } from 'vuex';
 import Avatar from 'vue-avatar';
 const Pagination = () => import('@/components/oj/common/Pagination');
 export default {
-  name: 'acm-rank',
+  name: 'all-rank',
   components: {
     Pagination,
     Avatar,
@@ -243,7 +223,7 @@ export default {
       let bar = this.$refs.chart;
       bar.showLoading({ maskColor: 'rgba(250, 250, 250, 0.8)' });
       this.loadingTable = true;
-      api.getUserRank(page, this.limit, RULE_TYPE.OI, this.searchUser).then(
+      api.getUserRank(page, this.limit, RULE_TYPE.ALL, this.searchUser).then(
         (res) => {
           if (page === 1) {
             this.changeCharts(res.data.data.records.slice(0, 10));
