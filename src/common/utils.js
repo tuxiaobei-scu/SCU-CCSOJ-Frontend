@@ -139,6 +139,17 @@ function stringToExamples(value){
   return objList
 }
 
+function stringToFlags(value){
+  let reg = "<input>([\\s\\S]*?)</input>";
+  let re = RegExp(reg,"g");
+  let objList = []
+  let tmp;
+  while(tmp=re.exec(value)){
+    objList.push({input:tmp[1]})
+  }
+  return objList
+}
+
 function examplesToString(objList){
   if(objList.length == 0){
     return "";
@@ -146,6 +157,17 @@ function examplesToString(objList){
   let result=""
   for(let obj of objList){
     result+= "<input>"+obj.input+"</input><output>"+obj.output+"</output>"
+  }
+  return result
+}
+
+function flagsToString(objList){
+  if(objList.length == 0){
+    return "";
+  }
+  let result=""
+  for(let obj of objList){
+    result+= "<input>"+obj.flag+"</input>"
   }
   return result
 }
@@ -186,6 +208,7 @@ export default {
   downloadFileByText:downloadFileByText,
   getLanguages:getLanguages,
   stringToExamples:stringToExamples,
+  stringToFlags:stringToFlags,
   examplesToString:examplesToString,
   getLevelColor:getLevelColor,
   getLevelName:getLevelName

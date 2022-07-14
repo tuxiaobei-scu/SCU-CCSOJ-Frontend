@@ -301,7 +301,7 @@ export default {
       CONTEST_TYPE_REVERSE: {},
       acmSrc: require('@/assets/acm.jpg'),
       oiSrc: require('@/assets/oi.jpg'),
-      ctfSrc: require('@/assets/ctf.png'),
+      //ctfSrc: require('@/assets/ctf.png'),
       loading: true,
     };
   },

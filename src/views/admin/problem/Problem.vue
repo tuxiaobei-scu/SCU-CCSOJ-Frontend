@@ -124,7 +124,6 @@
             <el-form-item
               prop="input_description"
               :label="$t('m.Input')"
-              required
             >
               <Editor :value.sync="problem.input"></Editor>
             </el-form-item>
@@ -133,7 +132,6 @@
             <el-form-item
               prop="output_description"
               :label="$t('m.Output')"
-              required
             >
               <Editor :value.sync="problem.output"></Editor>
             </el-form-item>
@@ -453,11 +451,18 @@
 
         <el-row :gutter="20" v-if="!problem.isRemote">
           <div class="panel-title home-title">
-            {{ $t('m.Judge_Samples') }}
-            <el-popover placement="right" trigger="hover">
-              <p>{{ $t('m.Sample_Tips') }}</p>
-              <i slot="reference" class="el-icon-question"></i>
-            </el-popover>
+            <div v-if="problem.type != 2">
+              {{ $t('m.Judge_Samples') }}
+              <el-popover placement="right" trigger="hover">
+                <p>{{ $t('m.Sample_Tips') }}</p>
+                <i slot="reference" class="el-icon-question"></i>
+              </el-popover>
+            </div>
+            <div v-else>
+              {{ $t('m.Flags') }}
+            </div>
+
+
           </div>
 
           <el-switch
@@ -516,7 +521,7 @@
                       size="small"
                       :placeholder="$t('m.Score')"
                       v-model="row.score"
-                      :disabled="problem.type != 1"
+                      :disabled="problem.type == 0"
                     >
                     </el-input>
                   </template>
@@ -531,7 +536,7 @@
               :key="'sample' + index"
             >
               <Accordion
-                :title="$t('m.Problem_Sample') + (index + 1)"
+                :title="problem.type == 2 ? $t('m.Flag') + (index + 1) : $t('m.Problem_Sample') + (index + 1)"
                 :isOpen="sample.isOpen ? true : false"
                 :index="index"
                 @changeVisible="changeSampleVisible"
@@ -547,7 +552,7 @@
                 </el-button>
                 <el-row :gutter="20">
                   <el-col :xs="24" :md="12">
-                    <el-form-item :label="$t('m.Sample_Input')" required>
+                    <el-form-item :label="$t('m.Sample_Input')">
                       <el-input
                         :rows="5"
                         type="textarea"
@@ -558,7 +563,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :md="12">
-                    <el-form-item :label="$t('m.Sample_Output')" required>
+                    <el-form-item :label="problem.type != 2 ? $t('m.Sample_Output') : $t('m.Flag')">
                       <el-input
                         :rows="5"
                         type="textarea"
@@ -568,7 +573,7 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="24" v-show="problem.type == 1">
+                  <el-col :span="24" v-show="problem.type != 0">
                     <el-form-item :label="$t('m.Score')">
                       <el-input
                         type="number"
@@ -589,7 +594,8 @@
                 @click="addSample()"
                 icon="el-icon-plus"
                 type="small"
-                >{{ $t('m.Add_Sample') }}
+                >
+                {{ problem.type != 2 ? $t('m.Add_Sample') : $t('m.Add_Flag')}}
               </el-button>
             </div>
           </div>
@@ -618,9 +624,11 @@
           :label="$t('m.Publish_the_Judging_Result_of_Test_Data')"
         >
           <el-switch
+
             v-model="problem.openCaseResult"
             active-text=""
             inactive-text=""
+            :disabled="problem.type == 2"
           >
           </el-switch>
         </el-form-item>
@@ -660,13 +668,13 @@ export default {
           trigger: 'blur',
         },
         input_description: {
-          required: true,
-          message: 'Input Description is required',
+          required: false,
+          message: 'Input Description',
           trigger: 'blur',
         },
         output_description: {
-          required: true,
-          message: 'Output Description is required',
+          required: false,
+          message: 'Output Description',
           trigger: 'blur',
         },
       },
@@ -913,9 +921,11 @@ export default {
           this.spjRecord.spjCode = data.spjCode;
           this.problem = data;
           this.problem['examples'] = utils.stringToExamples(data.examples);
+
           if(this.problem['examples'].length > 0){
             this.problem['examples'][0]['isOpen'] = true;
           }
+
           this.testCaseUploaded = true;
           if (this.problem.userExtraFile) {
             this.addUserExtraFile = true;
@@ -1096,6 +1106,10 @@ export default {
             this.problemSamples[i].score = aver;
           }
         }
+      }
+      else if (type == 2) {
+        this.problem.openCaseResult = false;
+        this.problem.isUploadCase = false;
       }
     },
 
@@ -1558,6 +1572,7 @@ export default {
   background-color: #2d8cf0 !important;
   color: #fff;
 }
+
 .add-example-btn {
   margin-bottom: 10px;
 }

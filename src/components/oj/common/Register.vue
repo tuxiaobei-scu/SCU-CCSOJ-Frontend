@@ -2,70 +2,39 @@
   <div>
     <el-form :model="registerForm" :rules="rules" ref="registerForm">
       <el-form-item prop="username">
-        <el-input
-          v-model="registerForm.username"
-          prefix-icon="el-icon-user-solid"
-          :placeholder="$t('m.Register_Username')"
-          @keyup.enter.native="handleRegister"
-          width="100%"
-        ></el-input>
+        <el-input v-model="registerForm.username" prefix-icon="el-icon-user-solid"
+          :placeholder="$t('m.Register_Username')" @keyup.enter.native="handleRegister" width="100%"></el-input>
       </el-form-item>
 
       <el-form-item prop="password">
-        <el-input
-          v-model="registerForm.password"
-          prefix-icon="el-icon-lock"
-          :placeholder="$t('m.Register_Password')"
-          @keyup.enter.native="handleRegister"
-          type="password"
-        ></el-input>
+        <el-input v-model="registerForm.password" prefix-icon="el-icon-lock" :placeholder="$t('m.Register_Password')"
+          @keyup.enter.native="handleRegister" type="password"></el-input>
       </el-form-item>
       <el-form-item prop="passwordAgain">
-        <el-input
-          v-model="registerForm.passwordAgain"
-          prefix-icon="el-icon-lock"
-          :placeholder="$t('m.Register_Password_Again')"
-          @keyup.enter.native="handleRegister"
-          type="password"
-        ></el-input>
+        <el-input v-model="registerForm.passwordAgain" prefix-icon="el-icon-lock"
+          :placeholder="$t('m.Register_Password_Again')" @keyup.enter.native="handleRegister" type="password">
+        </el-input>
       </el-form-item>
       <el-form-item prop="email">
-        <el-input
-          v-model="registerForm.email"
-          prefix-icon="el-icon-message"
-          :placeholder="$t('m.Register_Email')"
-          @keyup.enter.native="handleRegister"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-message"
-            type="primary"
-            @click.native="sendRegisterEmail"
-            :loading="btnEmailLoading"
-          >
+        <el-input v-model="registerForm.email" prefix-icon="el-icon-message" :placeholder="$t('m.Register_Email')"
+          @keyup.enter.native="handleRegister">
+          <el-button slot="append" icon="el-icon-message" type="primary" @click.native="sendRegisterEmail"
+            :loading="btnEmailLoading">
             <span v-show="btnEmailLoading">{{ countdownNum }}</span>
           </el-button>
         </el-input>
       </el-form-item>
       <el-form-item prop="code">
-        <el-input
-          v-model="registerForm.code"
-          prefix-icon="el-icon-s-check"
-          :placeholder="$t('m.Register_Email_Captcha')"
-          @keyup.enter.native="handleRegister"
-        ></el-input>
+        <el-input v-model="registerForm.code" prefix-icon="el-icon-s-check"
+          :placeholder="$t('m.Register_Email_Captcha')" @keyup.enter.native="handleRegister"></el-input>
       </el-form-item>
     </el-form>
     <div class="footer">
-      <el-button
-        type="primary"
-        @click="handleRegister()"
-        :loading="btnRegisterLoading"
-      >
+      <el-button type="primary" @click="handleRegister()" :loading="btnRegisterLoading">
         {{ $t('m.Register_Btn') }}
       </el-button>
       <el-link type="primary" @click="switchMode('Login')">{{
-        $t('m.Register_Already_Registed')
+          $t('m.Register_Already_Registed')
       }}</el-link>
     </div>
   </div>
@@ -300,10 +269,12 @@ export default {
   margin-bottom: -15px;
   text-align: center;
 }
+
 /deep/ .el-input-group__append {
   color: #fff;
   background: #25bb9b;
 }
+
 /deep/.footer .el-button--primary {
   margin: 0 0 15px 0;
   width: 100%;
