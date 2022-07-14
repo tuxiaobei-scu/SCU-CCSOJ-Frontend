@@ -4,7 +4,7 @@
       <paper-card type="server">
         <h1 class="text-darken">HOJ</h1>
         <h1>
-          <a href="https://gitee.com/himitzh0730/hoj" target="_blank"
+          <a href="https://gitee.com/scu-oop-10/scu-ccsoj-spring-boot" target="_blank"
             >Hcode Online Judge</a
           >
         </h1>

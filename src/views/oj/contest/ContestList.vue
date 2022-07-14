@@ -351,6 +351,8 @@ export default {
         return 'ACM';
       } else if (type == 1) {
         return 'OI';
+      } else if (type == 2) {
+        return 'CTF';
       }
     },
 

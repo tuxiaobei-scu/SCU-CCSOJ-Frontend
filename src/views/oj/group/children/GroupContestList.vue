@@ -402,6 +402,7 @@ export default {
       contestId: null,
       acmSrc: require('@/assets/acm.jpg'),
       oiSrc: require('@/assets/oi.jpg'),
+      ctfSrc: require('@/assets/ctf.png'),
     };
   },
   mounted() {

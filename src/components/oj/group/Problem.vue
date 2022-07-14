@@ -170,6 +170,7 @@
                 >
                   <el-radio :label="0">ACM</el-radio>
                   <el-radio :label="1">OI</el-radio>
+                  <el-radio :label="2">CTF</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>

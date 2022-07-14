@@ -668,12 +668,12 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated']),
     OJName() {
-      if (this.query.oj == 'Mine_CTF' || !this.$route.query.oj) {
+      if (this.query.oj == 'Mine_CTF') {
         return this.$i18n.t('m.My_CTF');
       } else if(this.query.oj == 'Mine_OI') {
         return this.$i18n.t('m.My_OI')
       } else if (this.query.oj == 'All') {
-        return this.$i18n.t('m.All');
+        return this.$i18n.t('m.All' || !this.$route.query.oj);
       } else {
         return this.query.oj;
       }

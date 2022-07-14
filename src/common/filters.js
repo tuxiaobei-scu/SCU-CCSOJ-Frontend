@@ -34,6 +34,8 @@ function parseContestType(num){
     return 'ACM'
   }else if(num==1){
     return 'OI'
+  }else if(num==2) {
+    return 'CTF'
   }
 }
 
