@@ -240,6 +240,7 @@
                       ></p>
                     </el-card>
                   </template>
+                  <!-- 下载文件
                   <template v-if="problemData.problem.HasFile">
                     <el-tooltip
                         effect="dark"
@@ -259,6 +260,7 @@
                     <p class="title">{{ $t('m.Source') }}</p>
                     <p class="content" v-html="problemData.problem.source"></p>
                   </template>
+                  -->
                 </div>
               </div>
             </el-tab-pane>
@@ -894,12 +896,13 @@ export default {
     submissionTimeFormat(time) {
       return utils.submissionTimeFormat(time);
     },
+    /*下载文件
     downloadProblemFile(problemID) {
       let url = '/api/file/download-problemfile?pid=' + problemID;
       utils.downloadFile(url).then(() => {
         this.$alert(this.$i18n.t('m.Download_ProblemFile_Success'), this.$i18n.t('m.Tips'));
       })
-    },
+    },*/
     submissionMemoryFormat(memory) {
       return utils.submissionMemoryFormat(memory);
     },
