@@ -237,7 +237,7 @@ export default {
   data() {
     return {
       discussion: {
-        author: 'HOJ',
+        author: 'CCSOJ',
         avatar: '',
       },
       query: {

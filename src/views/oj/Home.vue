@@ -329,11 +329,15 @@ export default {
       },
       carouselImgList: [
         {
+          url: 'https://s3.bmp.ovh/imgs/2022/07/15/937e464cf239c9ea.jpg',
+        },
+        {
           url: 'https://s1.ax1x.com/2022/07/13/jR5W5V.jpg',
         },
         {
           url: 'https://s1.ax1x.com/2022/05/15/ORp86f.jpg',
         },
+
       ],
       srcHight: '440px',
       remoteJudgeList: [

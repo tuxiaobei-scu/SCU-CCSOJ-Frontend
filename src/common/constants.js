@@ -285,11 +285,11 @@ export const USER_TYPE = {
 
 export const STORAGE_KEY = {
   AUTHED: 'authed',
-  PROBLEM_CODE_AND_SETTING: 'hojProblemCodeAndSetting',
+  PROBLEM_CODE_AND_SETTING: 'ccsojProblemCodeAndSetting',
   languages: 'languages',
-  CONTEST_ANNOUNCE:'hojContestAnnounce',
-  individualLanguageAndSetting:'hojIndividualLanguageAndSetting',
-  CONTEST_RANK_CONCERNED:'hojContestRankConcerned'
+  CONTEST_ANNOUNCE:'ccsojContestAnnounce',
+  individualLanguageAndSetting:'ccsojIndividualLanguageAndSetting',
+  CONTEST_RANK_CONCERNED:'ccsojContestRankConcerned'
 }
 
 export function buildIndividualLanguageAndSettingKey () {
