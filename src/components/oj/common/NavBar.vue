@@ -41,6 +41,10 @@
           ><i class="el-icon-s-marketing"></i
           >{{ $t('m.NavBar_Status') }}</el-menu-item
         >
+        <el-menu-item index="/RPstatus"
+        ><i class="el-icon-s-marketing"></i
+        >{{ $t('m.NavBar_RPStatus') }}</el-menu-item
+        >
         <el-submenu index="rank">
           <template slot="title"
             ><i class="el-icon-s-data"></i>{{ $t('m.NavBar_Rank') }}</template

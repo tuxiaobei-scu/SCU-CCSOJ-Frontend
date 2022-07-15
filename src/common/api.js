@@ -316,6 +316,12 @@ const ojApi = {
       params
     })
   },
+  getRPChangeList(limit, params) {
+    params.limit = limit
+    return ajax('/api/get-rpchange-list','get',{
+      params
+    })
+  },
   checkSubmissonsStatus(submitIds,cid){
     return ajax('/api/check-submissions-status', 'post', {
       data:{submitIds,cid}

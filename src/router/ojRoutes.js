@@ -4,6 +4,7 @@ import UserHome from "@/views/oj/user/UserHome.vue"
 import Setting from "@/views/oj/user/Setting.vue"
 import ProblemLIst from "@/views/oj/problem/ProblemList.vue"
 import Logout from "@/views/oj/user/Logout.vue"
+import RPChangeList from "@/views/oj/RPstatus/RPChangeList.vue"
 import SubmissionList from "@/views/oj/status/SubmissionList.vue"
 import SubmissionDetails from "@/views/oj/status/SubmissionDetails.vue"
 import ContestList from "@/views/oj/contest/ContestList.vue"
@@ -200,6 +201,12 @@ const ojRoutes = [
     name: 'SubmissionList',
     component: SubmissionList,
     meta: { title: 'Status' }
+  },
+  {
+    path: '/RPstatus',
+    name: 'RPChangeList',
+    component: RPChangeList,
+    meta: { title: 'RPStatus' }
   },
   {
     path: '/submission-detail/:submitID',

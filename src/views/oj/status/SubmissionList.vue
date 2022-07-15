@@ -6,27 +6,27 @@
           <el-row :gutter="18">
             <el-col :md="4" :lg="2">
               <span class="panel-title hidden-md-and-down">{{
-                $t('m.Status')
-              }}</span>
+                  $t('m.Status')
+                }}</span>
             </el-col>
             <el-col :xs="10" :sm="8" :md="4" :lg="4">
               <el-switch
-                style="display: block"
-                v-model="formFilter.onlyMine"
-                :active-text="$t('m.Mine')"
-                :width="40"
-                @change="handleOnlyMine"
-                :inactive-text="$t('m.All')"
+                  style="display: block"
+                  v-model="formFilter.onlyMine"
+                  :active-text="$t('m.Mine')"
+                  :width="40"
+                  @change="handleOnlyMine"
+                  :inactive-text="$t('m.All')"
               >
               </el-switch>
             </el-col>
 
             <el-col :xs="10" :sm="8" :md="5" :lg="4" style="padding-top: 5px;">
               <el-dropdown
-                class="drop-menu"
-                @command="handleStatusChange"
-                placement="bottom"
-                trigger="hover"
+                  class="drop-menu"
+                  @command="handleStatusChange"
+                  placement="bottom"
+                  trigger="hover"
               >
                 <span class="el-dropdown-link">
                   {{ status }}
@@ -34,12 +34,12 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="All">{{
-                    $t('m.All')
-                  }}</el-dropdown-item>
+                      $t('m.All')
+                    }}</el-dropdown-item>
                   <el-dropdown-item
-                    v-for="result in Object.keys(JUDGE_STATUS_LIST)"
-                    :key="result"
-                    :command="result"
+                      v-for="result in Object.keys(JUDGE_STATUS_LIST)"
+                      :key="result"
+                      :command="result"
                   >
                     {{ JUDGE_STATUS_LIST[result].name }}
                   </el-dropdown-item>
@@ -49,123 +49,123 @@
 
             <el-col :sm="8" :md="5" :lg="4" class="hidden-xs-only">
               <el-button
-                type="primary"
-                size="small"
-                icon="el-icon-refresh"
-                round
-                @click="getSubmissions"
-                >{{ $t('m.Refresh') }}</el-button
+                  type="primary"
+                  size="small"
+                  icon="el-icon-refresh"
+                  round
+                  @click="getSubmissions"
+              >{{ $t('m.Refresh') }}</el-button
               >
             </el-col>
             <el-col :xs="4" class="hidden-sm-and-up">
               <el-button
-                type="primary"
-                size="small"
-                icon="el-icon-refresh"
-                circle
-                @click="getSubmissions"
+                  type="primary"
+                  size="small"
+                  icon="el-icon-refresh"
+                  circle
+                  @click="getSubmissions"
               ></el-button>
             </el-col>
 
             <el-col :xs="24" :sm="12" :md="5" :lg="5" class="search">
               <vxe-input
-                v-model="formFilter.problemID"
-                :placeholder="$t('m.Enter_Problem_ID')"
-                type="search"
-                size="medium"
-                @keyup.enter.native="handleQueryChange('probemID')"
-                @search-click="handleQueryChange('probemID')"
+                  v-model="formFilter.problemID"
+                  :placeholder="$t('m.Enter_Problem_ID')"
+                  type="search"
+                  size="medium"
+                  @keyup.enter.native="handleQueryChange('probemID')"
+                  @search-click="handleQueryChange('probemID')"
               ></vxe-input>
             </el-col>
             <el-col :xs="24" :sm="12" :md="5" :lg="5" class="search">
               <vxe-input
-                v-model="formFilter.username"
-                :disabled="formFilter.onlyMine"
-                :placeholder="$t('m.Enter_Author')"
-                type="search"
-                size="medium"
-                @keyup.enter.native="handleQueryChange('username')"
-                @search-click="handleQueryChange('username')"
+                  v-model="formFilter.username"
+                  :disabled="formFilter.onlyMine"
+                  :placeholder="$t('m.Enter_Author')"
+                  type="search"
+                  size="medium"
+                  @keyup.enter.native="handleQueryChange('username')"
+                  @search-click="handleQueryChange('username')"
               ></vxe-input>
             </el-col>
           </el-row>
         </div>
         <vxe-table
-          border="inner"
-          stripe
-          keep-source
-          ref="xTable"
-          highlight-current-row
-          highlight-hover-row
-          align="center"
-          auto-resize
-          :row-class-name="tableRowClassName"
-          :data="submissions"
-          :loading="loadingTable"
+            border="inner"
+            stripe
+            keep-source
+            ref="xTable"
+            highlight-current-row
+            highlight-hover-row
+            align="center"
+            auto-resize
+            :row-class-name="tableRowClassName"
+            :data="submissions"
+            :loading="loadingTable"
         >
           <vxe-table-column
-            field="submitId"
-            :title="$t('m.Run_ID')"
-            width="100"
+              field="submitId"
+              :title="$t('m.Run_ID')"
+              width="100"
           ></vxe-table-column>
           <vxe-table-column
-            field="pid"
-            :title="$t('m.Problem')"
-            min-width="150"
-            show-overflow
+              field="pid"
+              :title="$t('m.Problem')"
+              min-width="150"
+              show-overflow
           >
             <template v-slot="{ row }">
               <span
-                v-if="contestID"
-                @click="getProblemUri(row.displayId)"
-                style="color: rgb(87, 163, 243)"
-                >{{ row.displayId + ' ' + row.title }}
+                  v-if="contestID"
+                  @click="getProblemUri(row.displayId)"
+                  style="color: rgb(87, 163, 243)"
+              >{{ row.displayId + ' ' + row.title }}
               </span>
               <span
-                v-else
-                @click="getProblemUri(row.displayPid)"
-                style="color: rgb(87, 163, 243)"
-                >{{ row.displayPid + ' ' + row.title }}
+                  v-else
+                  @click="getProblemUri(row.displayPid)"
+                  style="color: rgb(87, 163, 243)"
+              >{{ row.displayPid + ' ' + row.title }}
               </span>
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="status"
-            :title="$t('m.Status')"
-            min-width="160"
+              field="status"
+              :title="$t('m.Status')"
+              min-width="160"
           >
             <template v-slot="{ row }">
               <span :class="getStatusColor(row.status)">
                 <i
-                  class="el-icon-loading"
-                  v-if="
+                    class="el-icon-loading"
+                    v-if="
                     row.status == JUDGE_STATUS_RESERVE['Pending'] ||
                       row.status == JUDGE_STATUS_RESERVE['Compiling'] ||
                       row.status == JUDGE_STATUS_RESERVE['Judging']
                   "
                 ></i>
                 <i
-                  class="el-icon-refresh"
-                  v-if="row.status == JUDGE_STATUS_RESERVE['sf']"
-                  @click="reSubmit(row)"
+                    class="el-icon-refresh"
+                    v-if="row.status == JUDGE_STATUS_RESERVE['sf']"
+                    @click="reSubmit(row)"
                 ></i>
                 {{ JUDGE_STATUS[row.status].name }}
               </span>
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="score"
-            :title="$t('m.Score')"
-            width="64"
-            v-if="scoreColumnVisible"
+              field="score"
+              :title="$t('m.Score')"
+              width="64"
+              v-if="scoreColumnVisible"
           >
             <template v-slot="{ row }">
               <template v-if="contestID && row.score != null">
                 <el-tag
-                  effect="plain"
-                  size="medium"
-                  :type="JUDGE_STATUS[row.status]['type']"
-                  >{{ row.score }}</el-tag
+                    effect="plain"
+                    size="medium"
+                    :type="JUDGE_STATUS[row.status]['type']"
+                >{{ row.score }}</el-tag
                 >
               </template>
               <template v-else-if="row.score != null">
@@ -175,42 +175,42 @@
                       row.score != null ? row.score : $t('m.Unknown')
                     }}<br />{{ $t('m.OI_Rank_Score') }}：{{
                       row.oiRankScore != null
-                        ? row.oiRankScore
-                        : $t('m.Unknown')
+                          ? row.oiRankScore
+                          : $t('m.Unknown')
                     }}<br />
                     {{
                       $t('m.OI_Rank_Calculation_Rule')
                     }}：(score*0.1+difficulty*2)*(ac_cases/sum_cases)
                   </div>
                   <el-tag
-                    effect="plain"
-                    size="medium"
-                    :type="JUDGE_STATUS[row.status]['type']"
-                    >{{ row.score }}</el-tag
+                      effect="plain"
+                      size="medium"
+                      :type="JUDGE_STATUS[row.status]['type']"
+                  >{{ row.score }}</el-tag
                   >
                 </el-tooltip>
               </template>
               <template
-                v-else-if="
+                  v-else-if="
                   row.status == JUDGE_STATUS_RESERVE['Pending'] ||
                     row.status == JUDGE_STATUS_RESERVE['Compiling'] ||
                     row.status == JUDGE_STATUS_RESERVE['Judging']
                 "
               >
                 <el-tag
-                  effect="plain"
-                  size="medium"
-                  :type="JUDGE_STATUS[row.status]['type']"
+                    effect="plain"
+                    size="medium"
+                    :type="JUDGE_STATUS[row.status]['type']"
                 >
                   <i class="el-icon-loading"></i>
                 </el-tag>
               </template>
               <template v-else>
                 <el-tag
-                  effect="plain"
-                  size="medium"
-                  :type="JUDGE_STATUS[row.status]['type']"
-                  >--</el-tag
+                    effect="plain"
+                    size="medium"
+                    :type="JUDGE_STATUS[row.status]['type']"
+                >--</el-tag
                 >
               </template>
             </template>
@@ -221,9 +221,9 @@
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="memory"
-            :title="$t('m.Memory')"
-            min-width="96"
+              field="memory"
+              :title="$t('m.Memory')"
+              min-width="96"
           >
             <template v-slot="{ row }">
               <span>{{ submissionMemoryFormat(row.memory) }}</span>
@@ -231,9 +231,9 @@
           </vxe-table-column>
 
           <vxe-table-column
-            field="length"
-            :title="$t('m.Length')"
-            min-width="80"
+              field="length"
+              :title="$t('m.Length')"
+              min-width="80"
           >
             <template v-slot="{ row }">
               <span>{{ submissionLengthFormat(row.length) }}</span>
@@ -241,29 +241,29 @@
           </vxe-table-column>
 
           <vxe-table-column
-            field="language"
-            :title="$t('m.Language')"
-            show-overflow
-            min-width="130"
+              field="language"
+              :title="$t('m.Language')"
+              show-overflow
+              min-width="130"
           >
             <template v-slot="{ row }">
               <el-tooltip
-                class="item"
-                effect="dark"
-                :content="$t('m.View_submission_details')"
-                placement="top"
+                  class="item"
+                  effect="dark"
+                  :content="$t('m.View_submission_details')"
+                  placement="top"
               >
                 <el-button type="text" @click="showSubmitDetail(row)">{{
-                  row.language
-                }}</el-button>
+                    row.language
+                  }}</el-button>
               </el-tooltip>
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="judger"
-            :title="$t('m.Judger')"
-            min-width="100"
-            show-overflow
+              field="judger"
+              :title="$t('m.Judger')"
+              min-width="100"
+              show-overflow
           >
             <template v-slot="{ row }">
               <span v-if="row.judger">{{ row.judger }}</span>
@@ -271,30 +271,30 @@
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="username"
-            :title="$t('m.Author')"
-            min-width="96"
-            show-overflow
+              field="username"
+              :title="$t('m.Author')"
+              min-width="96"
+              show-overflow
           >
             <template v-slot="{ row }">
               <a
-                @click="goUserHome(row.username, row.uid)"
-                style="color: rgb(87, 163, 243)"
-                >{{ row.username }}</a
+                  @click="goUserHome(row.username, row.uid)"
+                  style="color: rgb(87, 163, 243)"
+              >{{ row.username }}</a
               >
             </template>
           </vxe-table-column>
           <vxe-table-column
-            field="submitTime"
-            :title="$t('m.Submit_Time')"
-            min-width="96"
+              field="submitTime"
+              :title="$t('m.Submit_Time')"
+              min-width="96"
           >
             <template v-slot="{ row }">
               <span
-                ><el-tooltip
+              ><el-tooltip
                   :content="row.submitTime | localtime"
                   placement="top"
-                >
+              >
                   <span>{{ row.submitTime | fromNow }}</span>
                 </el-tooltip></span
               >
@@ -302,29 +302,29 @@
           </vxe-table-column>
           <!-- 非比赛提交记录，超级管理员可以对提交进行重判 -->
           <vxe-table-column
-            v-if="rejudgeColumnVisible"
-            :title="$t('m.Option')"
-            min-width="90"
+              v-if="rejudgeColumnVisible"
+              :title="$t('m.Option')"
+              min-width="90"
           >
             <template v-slot="{ row }">
               <vxe-button
-                status="primary"
-                @click="handleRejudge(row)"
-                size="mini"
-                :loading="row.loading"
-                >{{ $t('m.Rejudge') }}</vxe-button
+                  status="primary"
+                  @click="handleRejudge(row)"
+                  size="mini"
+                  :loading="row.loading"
+              >{{ $t('m.Rejudge') }}</vxe-button
               >
             </template>
           </vxe-table-column>
         </vxe-table>
       </el-card>
       <Pagination
-        :total="total"
-        :page-size="limit"
-        @on-change="changeRoute"
-        :current.sync="currentPage"
-        @on-page-size-change="onPageSizeChange"
-        :layout="'prev, pager, next, sizes'"
+          :total="total"
+          :page-size="limit"
+          @on-change="changeRoute"
+          :current.sync="currentPage"
+          @on-page-size-change="onPageSizeChange"
+          :layout="'prev, pager, next, sizes'"
       ></Pagination>
     </div>
   </el-row>
@@ -493,34 +493,34 @@ export default {
       this.submissions = [];
       this.needCheckSubmitIds = {};
       let func = this.contestID
-        ? 'getContestSubmissionList'
-        : 'getSubmissionList';
+          ? 'getContestSubmissionList'
+          : 'getSubmissionList';
       api[func](this.limit, utils.filterEmptyValue(params))
-        .then((res) => {
-          let data = res.data.data;
-          let index = 0;
-          for (let v of data.records) {
-            if (
-              v.status == JUDGE_STATUS_RESERVE['Pending'] ||
-              v.status == JUDGE_STATUS_RESERVE['Compiling'] ||
-              v.status == JUDGE_STATUS_RESERVE['Judging']
-            ) {
-              this.needCheckSubmitIds[v.submitId] = index;
+          .then((res) => {
+            let data = res.data.data;
+            let index = 0;
+            for (let v of data.records) {
+              if (
+                  v.status == JUDGE_STATUS_RESERVE['Pending'] ||
+                  v.status == JUDGE_STATUS_RESERVE['Compiling'] ||
+                  v.status == JUDGE_STATUS_RESERVE['Judging']
+              ) {
+                this.needCheckSubmitIds[v.submitId] = index;
+              }
+              v.loading = false;
+              v.index = index;
+              index += 1;
             }
-            v.loading = false;
-            v.index = index;
-            index += 1;
-          }
-          this.loadingTable = false;
-          this.submissions = data.records;
-          this.total = data.total;
-          if (Object.keys(this.needCheckSubmitIds).length > 0) {
-            this.checkSubmissionsStatus();
-          }
-        })
-        .catch(() => {
-          this.loadingTable = false;
-        });
+            this.loadingTable = false;
+            this.submissions = data.records;
+            this.total = data.total;
+            if (Object.keys(this.needCheckSubmitIds).length > 0) {
+              this.checkSubmissionsStatus();
+            }
+          })
+          .catch(() => {
+            this.loadingTable = false;
+          });
     },
     // 对当前提交列表 状态为Pending（6）和Judging（7）的提交记录每2秒查询一下最新结果
     checkSubmissionsStatus() {
@@ -533,56 +533,56 @@ export default {
       const checkStatus = () => {
         let submitIds = this.needCheckSubmitIds;
         let func = this.contestID
-          ? 'checkContestSubmissonsStatus'
-          : 'checkSubmissonsStatus';
+            ? 'checkContestSubmissonsStatus'
+            : 'checkSubmissonsStatus';
         api[func](Object.keys(submitIds), this.contestID).then(
-          (res) => {
-            let result = res.data.data;
-            if (!this.$refs.xTable) {
-              // 避免请求一半退出view保错
-              return;
-            }
-            let viewData = this.$refs.xTable.getTableData().tableData;
-            for (let key in submitIds) {
-              let submitId = parseInt(key);
-              if (!result[submitId]) {
-                continue;
+            (res) => {
+              let result = res.data.data;
+              if (!this.$refs.xTable) {
+                // 避免请求一半退出view保错
+                return;
               }
-              // 更新数据列表
-              this.submissions[submitIds[key]] = result[submitId];
-              // 更新view中的结果，f分数，耗时，空间消耗，判题机ip
-              viewData[submitIds[key]].status = result[submitId].status;
-              viewData[submitIds[key]].score = result[submitId].score;
-              viewData[submitIds[key]].time = result[submitId].time;
-              viewData[submitIds[key]].memory = result[submitId].memory;
-              viewData[submitIds[key]].judger = result[submitId].judger;
-              // 重新加载这行数据到view中
-              this.$refs.xTable.reloadRow(viewData[submitIds[key]], null, null);
+              let viewData = this.$refs.xTable.getTableData().tableData;
+              for (let key in submitIds) {
+                let submitId = parseInt(key);
+                if (!result[submitId]) {
+                  continue;
+                }
+                // 更新数据列表
+                this.submissions[submitIds[key]] = result[submitId];
+                // 更新view中的结果，f分数，耗时，空间消耗，判题机ip
+                viewData[submitIds[key]].status = result[submitId].status;
+                viewData[submitIds[key]].score = result[submitId].score;
+                viewData[submitIds[key]].time = result[submitId].time;
+                viewData[submitIds[key]].memory = result[submitId].memory;
+                viewData[submitIds[key]].judger = result[submitId].judger;
+                // 重新加载这行数据到view中
+                this.$refs.xTable.reloadRow(viewData[submitIds[key]], null, null);
 
-              if (
-                result[submitId].status != JUDGE_STATUS_RESERVE['Pending'] &&
-                result[submitId].status != JUDGE_STATUS_RESERVE['Compiling'] &&
-                result[submitId].status != JUDGE_STATUS_RESERVE['Judging']
-              ) {
-                delete this.needCheckSubmitIds[key];
+                if (
+                    result[submitId].status != JUDGE_STATUS_RESERVE['Pending'] &&
+                    result[submitId].status != JUDGE_STATUS_RESERVE['Compiling'] &&
+                    result[submitId].status != JUDGE_STATUS_RESERVE['Judging']
+                ) {
+                  delete this.needCheckSubmitIds[key];
+                }
               }
-            }
-            // 当前提交列表的提交都判题结束或者检查结果600s（2s*300）还没判题结束，为了避免无用请求加重服务器负担，直接停止检查的请求。
-            if (
-              Object.keys(this.needCheckSubmitIds).length == 0 ||
-              this.checkStatusNum == 300
-            ) {
+              // 当前提交列表的提交都判题结束或者检查结果600s（2s*300）还没判题结束，为了避免无用请求加重服务器负担，直接停止检查的请求。
+              if (
+                  Object.keys(this.needCheckSubmitIds).length == 0 ||
+                  this.checkStatusNum == 300
+              ) {
+                clearTimeout(this.refreshStatus);
+                this.autoCheckOpen = false;
+              } else {
+                this.checkStatusNum += 1;
+                this.refreshStatus = setTimeout(checkStatus, 2000);
+              }
+            },
+            (res) => {
               clearTimeout(this.refreshStatus);
               this.autoCheckOpen = false;
-            } else {
-              this.checkStatusNum += 1;
-              this.refreshStatus = setTimeout(checkStatus, 2000);
             }
-          },
-          (res) => {
-            clearTimeout(this.refreshStatus);
-            this.autoCheckOpen = false;
-          }
         );
       };
       // 设置每2秒检查一下提交结果
@@ -610,8 +610,8 @@ export default {
       if (equal) {
         // 判断请求参数的长短
         if (
-          Object.keys(queryParams).length !=
-          Object.keys(this.$route.query).length
+            Object.keys(queryParams).length !=
+            Object.keys(this.$route.query).length
         ) {
           equal = false;
         }
@@ -620,10 +620,10 @@ export default {
       if (!equal) {
         // 避免重复同个路径请求导致报错
         let routeName = queryParams.contestID
-          ? 'ContestSubmissionList'
-          : this.groupID
-          ? 'GroupSubmissionList'
-          : 'SubmissionList';
+            ? 'ContestSubmissionList'
+            : this.groupID
+                ? 'GroupSubmissionList'
+                : 'SubmissionList';
         this.$router.push({
           name: routeName,
           query: queryParams,
@@ -658,34 +658,34 @@ export default {
     handleRejudge(row) {
       this.submissions[row.index].loading = true;
       api.submissionRejudge(row.submitId).then(
-        (res) => {
-          let xTable = this.$refs.xTable;
-          // 重判开始，需要将该提交的部分参数初始化
-          row.status = res.data.data.status;
-          row.score = null;
-          row.time = res.data.data.time;
-          row.memory = res.data.data.memory;
-          row.errorMessage = res.data.data.errorMessage;
-          row.judger = res.data.data.judger;
-          row.loading = false;
-          // 重新加载该行数据到view
-          xTable.reloadRow(row, null, null);
+          (res) => {
+            let xTable = this.$refs.xTable;
+            // 重判开始，需要将该提交的部分参数初始化
+            row.status = res.data.data.status;
+            row.score = null;
+            row.time = res.data.data.time;
+            row.memory = res.data.data.memory;
+            row.errorMessage = res.data.data.errorMessage;
+            row.judger = res.data.data.judger;
+            row.loading = false;
+            // 重新加载该行数据到view
+            xTable.reloadRow(row, null, null);
 
-          this.submissions[row.index] = res.data.data;
-          this.submissions[row.index].loading = false;
-          myMessage.success(this.$i18n.t('m.Rejudge_successfully'));
+            this.submissions[row.index] = res.data.data;
+            this.submissions[row.index].loading = false;
+            myMessage.success(this.$i18n.t('m.Rejudge_successfully'));
 
-          // 加入待重判列表
-          this.needCheckSubmitIds[row.submitId] = row.index;
-          this.checkStatusNum = 0;
-          if (!this.autoCheckOpen) {
-            // 如果当前未开启自动检查提交状态的定时任务，则开启
-            this.checkSubmissionsStatus();
+            // 加入待重判列表
+            this.needCheckSubmitIds[row.submitId] = row.index;
+            this.checkStatusNum = 0;
+            if (!this.autoCheckOpen) {
+              // 如果当前未开启自动检查提交状态的定时任务，则开启
+              this.checkSubmissionsStatus();
+            }
+          },
+          () => {
+            this.submissions[row.index].loading = false;
           }
-        },
-        () => {
-          this.submissions[row.index].loading = false;
-        }
       );
     },
     handleOnlyMine() {
@@ -783,18 +783,18 @@ export default {
     },
     status() {
       return this.formFilter.status === ''
-        ? this.$i18n.t('m.Status')
-        : JUDGE_STATUS[this.formFilter.status]
-        ? JUDGE_STATUS[this.formFilter.status].name
-        : this.$i18n.t('m.Status');
+          ? this.$i18n.t('m.Status')
+          : JUDGE_STATUS[this.formFilter.status]
+              ? JUDGE_STATUS[this.formFilter.status].name
+              : this.$i18n.t('m.Status');
     },
     rejudgeColumnVisible() {
       return this.isSuperAdmin;
     },
     scoreColumnVisible() {
       return (
-        (this.contestID && this.contestRuleType == this.RULE_TYPE.OI) ||
-        !this.contestID
+          (this.contestID && this.contestRuleType == this.RULE_TYPE.OI) ||
+          !this.contestID
       );
     },
   },
