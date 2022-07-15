@@ -191,6 +191,7 @@ export const m = {
   Recent_7_Days_AC_Rank: 'Recent 7 Days AC Top 10 Rank',
   Other_OJ_Contest: 'Other Online Judge Contest',
   Supported_Remote_Online_Judge: 'Supported Remote Online Judge',
+  Motto:'Motto',
 
 
   // 表格通用列名,按钮，搜索框等

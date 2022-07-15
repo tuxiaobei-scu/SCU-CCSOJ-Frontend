@@ -119,6 +119,10 @@ axios.interceptors.response.use(
 // 处理oj前台的请求
 const ojApi = {
   // Home页的请求
+  getMotto(){
+    return ajax('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335', 'get', {
+    })
+  },
   getWebsiteConfig(){
     return ajax('/api/get-website-config', 'get', {
     })

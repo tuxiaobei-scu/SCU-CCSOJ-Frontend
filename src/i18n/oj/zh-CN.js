@@ -191,6 +191,7 @@ export const m = {
   Recent_7_Days_AC_Rank: '最近7天内AC排名',
   Other_OJ_Contest: '其它OJ的近期比赛',
   Supported_Remote_Online_Judge: '支持的远程评测平台',
+  Motto:'格言',
 
 
   // 表格通用列名,按钮，搜索框等

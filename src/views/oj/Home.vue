@@ -292,6 +292,16 @@
             </el-col>
           </el-row>
         </el-card>
+
+        <el-card class="card-top">
+          <div slot="header" class="clearfix title">
+            <span class="home-title panel-title">
+              {{ $t('m.Motto') }}
+            </span>
+          </div>
+          {{ hitokoto }}
+        </el-card>
+
       </el-col>
     </el-row>
   </div>
@@ -316,6 +326,7 @@ export default {
   },
   data() {
     return {
+      hitokoto: "",
       interval: 5000,
       otherContests: [],
       recentUserACRecord: [],
@@ -378,6 +389,11 @@ export default {
           status: true,
         },
       ],
+      motto:[
+        {
+          url: 'https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335',
+        }
+      ]
     };
   },
   mounted() {
@@ -391,6 +407,7 @@ export default {
     this.CONTEST_TYPE_REVERSE = Object.assign({}, CONTEST_TYPE_REVERSE);
     this.getHomeCarousel();
     this.getRecentContests();
+    this.getMotto();
     this.getRecent7ACRank();
     // this.getRecentOtherContests();
   },
@@ -427,6 +444,11 @@ export default {
     //     }
     //   );
     // },
+    getMotto() {
+      api.getMotto().then((res) => {
+        this.hitokoto = res.hitokoto;
+      });
+    },
     getRecent7ACRank() {
       this.loading.recent7ACRankLoading = true;
       api.getRecent7ACRank().then(
@@ -502,7 +524,7 @@ export default {
   font-weight: 500;
   line-height: 30px;
 }
-.oj-logo {
+.ccsoj-logo {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   margin-bottom: 1rem;
@@ -510,10 +532,10 @@ export default {
   background: rgb(255, 255, 255);
   min-height: 47px;
 }
-.oj-normal {
+.ccsoj-normal {
   border-color: #409eff;
 }
-.oj-error {
+.ccsoj-error {
   border-color: #e65c47;
 }
 
