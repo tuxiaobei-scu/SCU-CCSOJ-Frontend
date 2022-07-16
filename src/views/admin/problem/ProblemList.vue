@@ -169,7 +169,7 @@
 
         <vxe-table-column
           field="author"
-          min-width="130"
+          min-width="80"
           :title="$t('m.Author')"
           show-overflow
         >
@@ -195,20 +195,50 @@
               :disabled="!isSuperAdmin && !isProblemAdmin && !query.contestId"
             >
               <el-option
-                :label="$t('m.Public_Problem')"
-                :value="1"
-                :disabled="!isSuperAdmin && !isProblemAdmin"
+                  :label="$t('m.Public_Problem')"
+                  :value="1"
+                  :disabled="!isSuperAdmin && !isProblemAdmin"
               ></el-option>
               <el-option
-                :label="$t('m.Private_Problem')"
-                :value="2"
+                  :label="$t('m.Private_Problem')"
+                  :value="2"
               ></el-option>
               <el-option
-                :label="$t('m.Contest_Problem')"
-                :value="3"
-                :disabled="!query.contestId"
+                  :label="$t('m.Contest_Problem')"
+                  :value="3"
+                  :disabled="!query.contestId"
               ></el-option>
             </el-select>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column min-width="100" :title="$t('m.Init_score')" v-if="query.contestId">
+          <template v-slot="{ row }">
+            <el-input-number
+                v-model="contestProblemMap[row.id].initScore"
+                size="small"
+                min="0"
+                @change="changeProblemScore(contestProblemMap[row.id])"
+            />
+          </template>
+        </vxe-table-column>
+        <vxe-table-column min-width="100" :title="$t('m.Decay_limit')" v-if="query.contestId">
+          <template v-slot="{ row }">
+            <el-input-number
+                v-model="contestProblemMap[row.id].decayLimit"
+                size="small"
+                min="0"
+                @change="changeProblemScore(contestProblemMap[row.id])"
+            />
+          </template>
+        </vxe-table-column>
+        <vxe-table-column min-width="100" :title="$t('m.Min_score')" v-if="query.contestId">
+          <template v-slot="{ row }">
+            <el-input-number
+                v-model="contestProblemMap[row.id].minScore"
+                size="small"
+                min="0"
+                @change="changeProblemScore(contestProblemMap[row.id])"
+            />
           </template>
         </vxe-table-column>
         <vxe-table-column title="Option" min-width="200">
@@ -531,6 +561,12 @@ export default {
 
     changeProblemAuth(row) {
       api.admin_changeProblemAuth(row).then((res) => {
+        myMessage.success(this.$i18n.t('m.Update_Successfully'));
+      });
+    },
+
+    changeProblemScore(row) {
+      api.admin_changeProblemScore(row).then((res) => {
         myMessage.success(this.$i18n.t('m.Update_Successfully'));
       });
     },

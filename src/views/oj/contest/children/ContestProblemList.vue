@@ -126,6 +126,11 @@
           </span>
         </template>
       </vxe-table-column>
+      <vxe-table-column field="total" :title="$t('m.Cur_score')" min-width="40">
+        <template v-slot="{ row }">
+          {{ row.curScore }}
+        </template>
+      </vxe-table-column>
       <vxe-table-column field="ACRate" :title="$t('m.AC_Rate')" min-width="120">
         <template v-slot="{ row }">
           <span>

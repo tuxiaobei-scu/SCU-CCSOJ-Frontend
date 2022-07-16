@@ -60,7 +60,13 @@ module.exports={
       '/api': {                                //   以'/api'开头的请求会被代理进行转发
         target: 'http://127.0.0.1:6688',       //   要发向的后台服务器地址  如果后台服务跑在后台开发人员的机器上，就写成 `http://ip:port` 如 `http:192.168.12.213:8081`   ip为后台服务器的ip
         changeOrigin: true 
-      }
+      }, '/hitokoto':{
+            target: 'https://v1.hitokoto.cn',
+            changeOrigin: true,
+            headers: {
+                Referer: 'https://www.baidu.com'
+            }
+        }
     },
     disableHostCheck: true,
   },
@@ -83,26 +89,27 @@ module.exports={
     const plugins = [];
     if (isProduction || devNeedCdn){
       config.externals = cdn.externals
-      config.mode = 'production';
+      //config.mode = 'production';
+      config.mode = 'development';
       config["performance"] = {//打包文件大小配置
-        "maxEntrypointSize": 10000000,
+        "maxEntrypointSize": 30000000,
         "maxAssetSize": 30000000
       }
-      config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            output: {
-              comments: false, // 去掉注释
-            },
-            warnings: false,
-            compress: {
-              drop_console: false,
-              drop_debugger: false,
-              // pure_funcs: ['console.log']//移除console
-            }
-          }
-        })
-      )
+      // config.plugins.push(
+      //   new UglifyJsPlugin({
+      //     uglifyOptions: {
+      //       output: {
+      //         comments: false, // 去掉注释
+      //       },
+      //       warnings: false,
+      //       compress: {
+      //         drop_console: false,
+      //         drop_debugger: false,
+      //         // pure_funcs: ['console.log']//移除console
+      //       }
+      //     }
+      //   })
+      // )
        // 服务器也要相应开启gzip
        config.plugins.push(
         new CompressionWebpackPlugin({

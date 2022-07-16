@@ -257,11 +257,13 @@ export const m = {
   General_Judge: 'General Judge',
   Special_Judge: 'Special Judge',
   Interactive_Judge: 'Interactive Judge',
+  Submit_Answer: 'Submit Answer',
   Special_Judge_Code: 'Special Judge Program Code',
   Interactive_Judge_Code: 'Interactive Judge Program Code',
   General_Judge_Mode_Tips: 'General Judge: the contestant program reads the problem standard input file, executes the code logic to obtain the contestant\'s output, and compares the contents of the problem standard output file to obtain the problem judgment result',
   Special_Judge_Mode_Tips: 'Special Judge: the output results required by the problem may not be unique, and different results are allowed. Therefore, a special program is needed to read standard output, player output and standard input, and compare them to obtain the final judgment result',
   Interactive_Judge_Mode_Tips: 'Interactive Judge: the standard output of the interactive program is written to the standard input of the player program through the interactive channel, and the standard output of the player program is written to the standard input of the interactive program through the interactive channel. Both need to flush the output buffer',
+  Submit_Answer_Judge_Mode_Tips: 'Submit_Answer: Upload the answer datas',
   Use_Special_Judge: 'Use Special Judge',
   SPJ_Language: 'SPJ Program Language',
   Interactive_Language: 'Interactive Program Langugae',
@@ -289,6 +291,12 @@ export const m = {
   Change_Judge_Mode: 'Note: switching the judgment mode may change the evaluation logic!',
   Add_Tag_Error: 'The tag has been added, please do not add it repeatedly!',
 
+
+  Init_score: 'Init score',
+  Decay_limit: 'Decay limit',
+  Min_score: 'Min score',
+  Cur_score: 'Cur score',
+
   Upload_Testcase_Successfully: 'Upload Testcase Successfully',
   Upload_Testcase_Failed: 'Upload Testcase Failed',
   is_required: 'is required!',
@@ -301,7 +309,7 @@ export const m = {
   Judge_Extra_File_Tips2: '2. Special Or Interactive Program: Provide additional library files for special or interactive programs',
   User_Program: 'User Program',
   SPJ_Or_Interactive_Program: 'Special Or Interactive Program',
-
+  Problem_Extra_File: 'Problem Extra File',
 
   // /views/admin/problem/Tag.vue
   Admin_Tag: 'Admin Tag',

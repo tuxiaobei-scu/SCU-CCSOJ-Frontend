@@ -1465,6 +1465,11 @@ const adminApi = {
       data
     })
   },
+  admin_changeProblemScore (data) {
+    return ajax('/api/admin/contest/contest-problem', 'put', {
+      data
+    })
+  },
   admin_getProblem (pid) {
     return ajax('/api/admin/problem', 'get', {
       params: {

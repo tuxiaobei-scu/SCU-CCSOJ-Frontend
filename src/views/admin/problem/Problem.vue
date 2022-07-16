@@ -371,6 +371,7 @@
               <p>1. {{ $t('m.General_Judge_Mode_Tips') }}</p>
               <p>2. {{ $t('m.Special_Judge_Mode_Tips') }}</p>
               <p>3. {{ $t('m.Interactive_Judge_Mode_Tips') }}</p>
+              <p>4. {{ $t('m.Submit_Answer_Judge_Mode_Tips') }}</p>
               <i slot="reference" class="el-icon-question"></i>
             </el-popover>
           </div>
@@ -382,10 +383,13 @@
                 <el-radio label="interactive">{{
                   $t('m.Interactive_Judge')
                 }}</el-radio>
+                <el-radio label="Submit_Answer">{{
+                    $t('m.Submit_Answer')
+                  }}</el-radio>
               </el-radio-group>
             </el-col>
           </el-form-item>
-          <el-form-item v-if="problem.judgeMode != 'default'">
+          <el-form-item v-if="problem.judgeMode != 'default' && problem.judgeMode != 'Submit_Answer'">
             <Accordion
               :title="
                 problem.judgeMode == 'spj'
@@ -891,7 +895,7 @@ export default {
     },
 
     'problem.spjLanguage'(newVal) {
-      if (this.allSpjLanguage.length && this.problem.judgeMode != 'default') {
+      if (this.allSpjLanguage.length && this.problem.judgeMode != 'default' && problem.judgeMode != 'Submit_Answer') {
         this.spjMode = this.allSpjLanguage.find((item) => {
           return item.name == this.problem.spjLanguage && item.isSpj == true;
         })['contentType'];
@@ -990,6 +994,9 @@ export default {
       } else if (mode == 'interactive') {
         modeName = 'Interactive_Judge';
         modeTips = 'Interactive_Judge_Mode_Tips';
+      } else if (mode == "Submit_Answer") {
+        modeName = 'Submit_Answer';
+        modeTips = 'Submit_Answer_Judge_Mode_Tips';
       }
       const h = this.$createElement;
       this.$msgbox({
@@ -1109,7 +1116,8 @@ export default {
       }
       else if (type == 2) {
         this.problem.openCaseResult = false;
-        this.problem.isUploadCase = false;
+        this.problem.isUploadCase = false
+        this.problem.judgeMode = "Submit_Answer";
       }
     },
 
@@ -1363,7 +1371,7 @@ export default {
         this.spjRecord.spjLanguage != this.problem.spjLanguage ||
         this.spjRecord.spjCode != this.problem.spjCode;
       if (!this.problem.isRemote) {
-        if (this.problem.judgeMode != 'default') {
+        if (this.problem.judgeMode != 'default' && this.problem.judgeMode != 'Submit_Answer') {
           if (!this.problem.spjCode) {
             this.error.spj =
               this.$i18n.t('m.Spj_Or_Interactive_Code') +
@@ -1446,7 +1454,7 @@ export default {
       }
       let problemDto = {}; // 上传给后台的数据
       if (!this.problem.isRemote) {
-        if (this.problem.judgeMode != 'default') {
+        if (this.problem.judgeMode != 'default' && this.problem.judgeMode != 'Submit_Answer') {
           if (isChangeModeCode) {
             problemDto['changeModeCode'] = true;
           }

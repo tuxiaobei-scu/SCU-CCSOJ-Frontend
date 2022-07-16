@@ -332,7 +332,7 @@
                     <vxe-table-column
                         :title="$t('m.Score')"
                         min-width="64"
-                        v-if="problemData.problem.type == 1"
+                        v-if="problemData.problem.type != 0"
                     >
                       <template v-slot="{ row }">
                         <template v-if="contestID && row.score != null">
@@ -495,6 +495,8 @@
           </el-tooltip>
         </div>
         <el-col :sm="24" :md="24" :lg="12" class="problem-right">
+          <!--- 代码剪辑器开始 -->
+          <template v-if="problemData.problem.judgeMode != 'Submit_Answer'">
           <el-card
               :padding="10"
               id="submit-code"
@@ -681,7 +683,111 @@
               </el-col>
             </el-row>
           </el-card>
+          </template>
+          <!--- 代码编辑器结束，提交答案题开始 -->
+          <template v-else>
+            <el-form :model="form" >
+              <el-card
+                  :padding="10"
+                  id="submit-code"
+                  shadow="always"
+                  class="submit-detail"
+              >
+
+                <el-switch
+                    v-model="problemData.problem.isUploadCase"
+                    :active-text="$t('m.Use_Upload_File')"
+                    :inactive-text="$t('m.Use_Manual_Input')"
+                    style="margin: 10px 0"
+                >
+                </el-switch>
+                <div v-show="problemData.problem.isUploadCase">
+                  <el-col :span="24">
+                    <el-form-item :error="error.testcase">
+                      <el-upload
+                          :action="uploadFileUrl"
+                          name="file"
+                          :show-file-list="true"
+                          :on-success="uploadSucceeded"
+                          :on-error="uploadFailed"
+                      >
+                        <el-button
+                            size="small"
+                            type="primary"
+                            icon="el-icon-upload"
+                        >{{ $t('m.Choose_File') }}</el-button
+                        >
+                      </el-upload>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <vxe-table
+                        stripe
+                        auto-resize
+                        :data="problemData.problem.testCaseScore"
+                        align="center"
+                    >
+                      <vxe-table-column
+                          field="input"
+                          :title="$t('m.Sample_Input_File')"
+                          min-width="100"
+                      >
+                      </vxe-table-column>
+                      <vxe-table-column
+                          field="output"
+                          :title="$t('m.Sample_Output_File')"
+                          min-width="100"
+                      >
+                      </vxe-table-column>
+                      <vxe-table-column
+                          field="score"
+                          :title="$t('m.Score')"
+                          min-width="100"
+                      >
+                        <template v-slot="{ row }">
+                          <el-input
+                              size="small"
+                              :placeholder="$t('m.Score')"
+                              v-model="row.score"
+                              :disabled="problemData.problem.type == 0"
+                          >
+                          </el-input>
+                        </template>
+                      </vxe-table-column>
+                    </vxe-table>
+                  </el-col>
+                </div>
+
+                <div v-show="!problemData.problem.isUploadCase">
+                  <el-form-item
+                      v-for="(value) in problemData.file_names"
+                  >
+                    <Accordion
+                        :title="value"
+                        :index="index"
+                    >
+                      <el-row :gutter="20">
+                        <el-col :xs="24" :md="12">
+                          <el-form-item :label="value">
+                            <el-input
+                                :rows="5"
+                                type="textarea"
+                            >
+                            </el-input>
+                          </el-form-item>
+                        </el-col>
+                      </el-row>
+                    </Accordion>
+                  </el-form-item>
+
+
+                </div>
+              </el-card>
+            </el-form>
+          </template>
+
         </el-col>
+
       </el-row>
     </div>
 
@@ -780,6 +886,7 @@ export default {
         tags: [],
         languages: [],
         codeTemplate: {},
+        file_names:[]
       },
       pie: pie,
       largePie: largePie,
@@ -787,6 +894,12 @@ export default {
       largePieInitOpts: {
         width: '380',
         height: '380',
+      },
+      error: {
+        tags: '',
+        spj: '',
+        languages: '',
+        testCase: '',
       },
       JUDGE_STATUS_RESERVE: {},
       JUDGE_STATUS: {},
@@ -805,7 +918,9 @@ export default {
       userExtraFile: null,
       fileContent: '',
       fileName: '',
-      openTestCaseDrawer:false
+      openTestCaseDrawer:false,
+      problemSamples: [],
+      uploadFileUrl: ''
     };
   },
   created() {
@@ -852,6 +967,13 @@ export default {
       if (name == 'mySubmission' && this.isAuthenticated) {
         this.getMySubmission();
       }
+    },
+    addSample() {
+      this.problemSamples.push({
+        ans: '',
+        pid: this.pid,
+        isOpen: true,
+      });
     },
 
           getMySubmission() {
@@ -1027,6 +1149,7 @@ export default {
               ? 'getContestProblem'
               : 'getProblem';
       this.loading = true;
+      this.uploadFileUrl = '/api/file/upload-answers-zip';
       api[func](this.problemID, this.contestID, this.groupID).then(
           (res) => {
             let result = res.data.data;
