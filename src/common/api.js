@@ -120,8 +120,14 @@ axios.interceptors.response.use(
 const ojApi = {
   // Home页的请求
   getMotto(){
-    return ajax('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335', 'get', {
-    })
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+          const hitokoto = document.getElementById('hitokoto_text')
+          hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+          hitokoto.innerText = data.hitokoto
+        })
+        .catch(console.error)
   },
   getWebsiteConfig(){
     return ajax('/api/get-website-config', 'get', {
@@ -554,7 +560,7 @@ const ojApi = {
     })
   },
 
-  // ACM赛制或OI赛制的排行榜
+  // ACM、OI、CTF赛制的排行榜
   getUserRank(currentPage,limit,type,searchUser){
     return ajax('/api/get-rank-list','get',{
       params: {

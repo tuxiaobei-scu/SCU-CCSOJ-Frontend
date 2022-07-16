@@ -298,6 +298,7 @@
             <span class="home-title panel-title">
               {{ $t('m.Motto') }}
             </span>
+
           </div>
           {{ hitokoto }}
         </el-card>
@@ -371,21 +372,21 @@ export default {
           status: true,
         },
         {
-          url: 'https://codeforces.com/gyms',
-          name: 'GYM',
-          logo: require('@/assets/gym-logo.png'),
+          url: 'https://buuoj.cn',
+          name: 'buuoj',
+          logo: require('@/assets/buuctf.png'),
           status: true,
         },
         {
-          url: 'https://atcoder.jp',
-          name: 'AtCoder',
-          logo: require('@/assets/atcoder-logo.png'),
+          url: 'https://ctf.show',
+          name: 'ctfshow',
+          logo: require('@/assets/ctfshow.png'),
           status: true,
         },
         {
-          url: 'https://www.spoj.com',
-          name: 'SPOJ',
-          logo: require('@/assets/spoj-logo.png'),
+          url: 'https://pwn.college',
+          name: 'pwncollege',
+          logo: require('@/assets/pwncollege.png'),
           status: true,
         },
       ],

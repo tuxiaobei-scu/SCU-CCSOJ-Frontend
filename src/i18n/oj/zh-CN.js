@@ -190,7 +190,7 @@ export const m = {
   Welcome_to: '欢迎使用 ',
   Recent_7_Days_AC_Rank: '最近7天内AC排名',
   Other_OJ_Contest: '其它OJ的近期比赛',
-  Supported_Remote_Online_Judge: '支持的远程评测平台',
+  Supported_Remote_Online_Judge: '友链',
   Motto:'格言',
 
 

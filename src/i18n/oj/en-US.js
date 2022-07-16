@@ -190,7 +190,7 @@ export const m = {
   Welcome_to: 'Welcome to ',
   Recent_7_Days_AC_Rank: 'Recent 7 Days AC Top 10 Rank',
   Other_OJ_Contest: 'Other Online Judge Contest',
-  Supported_Remote_Online_Judge: 'Supported Remote Online Judge',
+  Supported_Remote_Online_Judge: 'Relative links',
   Motto:'Motto',
 
 
@@ -240,7 +240,7 @@ export const m = {
   No_tag: 'No tag',
   Statistic: 'Statistic',
   Solutions: 'Solutions',
-  Problem_Discussion: 'Discussion',
+  // Problem_Discussion: 'Discussion',
   Description: 'Description',
   Input: 'Input',
   Output: 'Output',
@@ -633,7 +633,7 @@ export const m = {
   Apply_Group: 'Apply to Join',
   Apply_Successfully: 'Apply Successfully',
   Exit_Group: 'Exit Group',
-  Applying:'Applying...',
+  // Applying:'Applying...',
   Reject_Application:'Rejected',
   Exit_Group_Tips: 'Are you sure you want to exit the group? After exiting, you will no longer be able to view group resources!',
   Exit_Successfully: 'Exit Successfully',

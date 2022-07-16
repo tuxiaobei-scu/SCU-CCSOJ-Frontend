@@ -104,6 +104,12 @@
                     :src="oiSrc"
                     width="95px"
                   />
+                  <img
+                      v-show="contest.type == 2"
+                      class="trophy"
+                      :src="ctfSrc"
+                      width="95px"
+                  />
                 </el-col>
                 <el-col
                   :xs="10"
@@ -301,7 +307,7 @@ export default {
       CONTEST_TYPE_REVERSE: {},
       acmSrc: require('@/assets/acm.jpg'),
       oiSrc: require('@/assets/oi.jpg'),
-      //ctfSrc: require('@/assets/ctf.png'),
+      ctfSrc: require('@/assets/ctf.jpg'),
       loading: true,
     };
   },
