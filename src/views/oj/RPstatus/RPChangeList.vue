@@ -218,15 +218,6 @@ export default {
 
     getRPChange() {
       let params = this.buildQuery();
-      params.contestID = this.contestID;
-      params.gid = this.groupID;
-      if (this.contestID) {
-        if (this.contestStatus == CONTEST_STATUS.SCHEDULED) {
-          params.beforeContestSubmit = true;
-        } else {
-          params.beforeContestSubmit = false;
-        }
-      }
       if (this.formFilter.onlyMine) {
         // 需要判断是否为登陆状态
         if (this.isAuthenticated) {
@@ -238,7 +229,6 @@ export default {
           return;
         }
       }
-
       this.loadingTable = true;
       this.submissions = [];
       this.needCheckSubmitIds = {};

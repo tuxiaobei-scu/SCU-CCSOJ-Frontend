@@ -135,7 +135,7 @@ export default {
           trigger: 'axis',
         },
         legend: {
-          data: ['Score'],
+          data: ['rp'],
         },
         grid: {
           x: '3%',
@@ -194,7 +194,7 @@ export default {
         ],
         series: [
           {
-            name: this.$i18n.t('m.Score'),
+            name: this.$i18n.t('m.rp'),
             type: 'bar',
             data: [0],
             barMaxWidth: '80',
@@ -243,13 +243,13 @@ export default {
       return this.limit * (this.page - 1) + rowIndex + 1;
     },
     changeCharts(rankData) {
-      let [usernames, scores] = [[], []];
+      let [usernames, rps] = [[], []];
       rankData.forEach((ele) => {
         usernames.push(ele.username);
-        scores.push(ele.score);
+        rps.push(ele.rp);
       });
       this.options.xAxis[0].data = usernames;
-      this.options.series[0].data = scores;
+      this.options.series[0].data = rps;
     },
     getInfoByUsername(uid, username) {
       this.$router.push({
