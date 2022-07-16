@@ -39,7 +39,7 @@
             <el-col :md="6" :xs="24">
               <h1>{{ $t('m.Development') }}</h1>
               <p class="mb-1">
-                <a href="https://gitee.com/himitzh0730/hoj" target="_blank">{{
+                <a href="https://gitee.com/scu-oop-10/scu-ccsoj-vue" target="_blank">{{
                   $t('m.Open_Source')
                 }}</a>
               </p>
@@ -56,7 +56,7 @@
               </p>
               <p>
                 <i class="el-icon-document"></i>
-                <a href="https://docs.hdoi.cn" target="_blank"> {{ $t('m.Help') }}</a>
+                <a href="https://ccs.scu.edu.cn/" target="_blank"> {{ $t('m.Help') }}</a>
               </p>
             </el-col>
           </el-row>
