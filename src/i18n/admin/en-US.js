@@ -32,6 +32,7 @@ export const m = {
   Create_Contest: 'Create Contest',
   Discussion: 'Discussion',
   Discussion_Admin: 'Admin Discussion',
+  Motto_Admin:'Motto_Admin',
   Home_Page: 'Home Page',
   Logout: 'Logout',
   Log_Out_Successfully: 'Log out successfully',

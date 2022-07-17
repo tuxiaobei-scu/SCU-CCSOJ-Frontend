@@ -120,7 +120,7 @@ axios.interceptors.response.use(
 const ojApi = {
   // Home页的请求
   getMotto(){
-    return ajax('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335', 'get', {
+    return ajax('https://v1.hitokoto.cn/?encode=js&select=%23hitokoto', 'get', {
     })
   },
   getWebsiteConfig(){

@@ -32,6 +32,7 @@ export const m = {
   Create_Contest: '创建比赛',
   Discussion: '讨论管理',
   Discussion_Admin: '讨论管理',
+  Motto_Admin:'一言管理',
   Home_Page: '主页',
   Logout: '退出登录',
   Log_Out_Successfully: '退出登录成功',
