@@ -183,6 +183,7 @@
                 v-model="problem.codeShare"
                 active-text=""
                 inactive-text=""
+                :disabled="problem.type == 2"
               >
               </el-switch>
             </el-form-item>
@@ -639,7 +640,6 @@
             v-model="problem.openCaseResult"
             active-text=""
             inactive-text=""
-            :disabled="problem.type == 2"
           >
           </el-switch>
         </el-form-item>
@@ -1119,9 +1119,8 @@ export default {
         }
       }
       else if (type == 2) {
-        this.problem.openCaseResult = false;
         this.problem.isUploadCase = false;
-        this.problem.isUploadCase = false;
+        this.problem.codeShare = false;
       }
     },
 
