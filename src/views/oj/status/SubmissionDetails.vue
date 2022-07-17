@@ -19,11 +19,11 @@
           <div v-else class="content">
             <span class="span-row"
               >{{ $t('m.Time') }}:
-              {{ submissionTimeFormat(submission.time) }}</span
+              {{ submission.submitAns ? '/' :submissionTimeFormat(submission.time) }}</span
             >
             <span class="span-row"
               >{{ $t('m.Memory') }}:
-              {{ submissionMemoryFormat(submission.memory) }}</span
+              {{ submission.submitAns ? '/' :submissionMemoryFormat(submission.memory) }}</span
             >
             <span class="span-row"
               >{{ $t('m.Length') }}:
@@ -83,12 +83,12 @@
         </vxe-table-column>
         <vxe-table-column :title="$t('m.Time')" min-width="96">
           <template v-slot="{ row }">
-            <span>{{ submissionTimeFormat(row.time) }}</span>
+            <span>{{ submission.submitAns ? '/' : submissionTimeFormat(row.time) }}</span>
           </template>
         </vxe-table-column>
         <vxe-table-column :title="$t('m.Memory')" min-width="96">
           <template v-slot="{ row }">
-            <span>{{ submissionMemoryFormat(row.memory) }}</span>
+            <span>{{ submission.submitAns ? '/' : submissionMemoryFormat(row.memory) }}</span>
           </template>
         </vxe-table-column>
         <vxe-table-column
@@ -164,7 +164,7 @@
               >
                 <span>Test #{{ index + 1 }}:</span>
                 <h2>{{ JUDGE_STATUS[item.status]['short'] }}</h2>
-                <div style="text-align:center;">
+                <div style="text-align:center;" v-if="!submission.submitAns">
                   {{ item.time }}ms/{{ item.memory }}KB
                 </div>
                 <div class="test-run-static">
@@ -184,7 +184,7 @@
               >
                 <span>Test #{{ index + 1 }}: </span>
                 <h2>{{ JUDGE_STATUS[item.status]['short'] }}</h2>
-                <div style="text-align:center;">
+                <div style="text-align:center;" v-if="!submission.submitAns">
                   {{ item.time }}ms/{{ item.memory }}KB
                 </div>
                 <div class="test-run-static">

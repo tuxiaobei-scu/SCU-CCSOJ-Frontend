@@ -217,7 +217,7 @@
           </vxe-table-column>
           <vxe-table-column field="time" :title="$t('m.Time')" min-width="96">
             <template v-slot="{ row }">
-              <span>{{ submissionTimeFormat(row.time) }}</span>
+              <span>{{ row.submitAns ? '/' : submissionTimeFormat(row.time) }}</span>
             </template>
           </vxe-table-column>
           <vxe-table-column
@@ -226,7 +226,7 @@
               min-width="96"
           >
             <template v-slot="{ row }">
-              <span>{{ submissionMemoryFormat(row.memory) }}</span>
+              <span>{{ row.submitAns ? '/' : submissionMemoryFormat(row.memory) }}</span>
             </template>
           </vxe-table-column>
 
@@ -254,7 +254,7 @@
                   placement="top"
               >
                 <el-button type="text" @click="showSubmitDetail(row)">{{
-                    row.language
+                    row.submitAns ? $t('m.Submit_Answer') : row.language
                   }}</el-button>
               </el-tooltip>
             </template>

@@ -543,7 +543,7 @@
         </div>
         <el-col :sm="24" :md="24" :lg="12" class="problem-right">
           <!--- 代码剪辑器开始 -->
-          <template v-if="problemData.problem.judgeMode != 'Submit_Answer'">
+          <template v-if="problemData.problem.type != 2">
           <el-card
               :padding="10"
               id="submit-code"
@@ -732,6 +732,7 @@
           </el-card>
           </template>
           <!--- 代码编辑器结束，提交答案题开始 -->
+
           <template v-else>
             <el-form :model="form" >
               <el-card
@@ -740,85 +741,20 @@
                   shadow="always"
                   class="submit-detail"
               >
-
-                <el-switch
-                    v-model="problemData.problem.isUploadCase"
-                    :active-text="$t('m.Use_Upload_File')"
-                    :inactive-text="$t('m.Use_Manual_Input')"
-                    style="margin: 10px 0"
-                >
-                </el-switch>
-                <div v-show="problemData.problem.isUploadCase">
-                  <el-col :span="24">
-                    <el-form-item :error="error.testcase">
-                      <el-upload
-                          :action="uploadFileUrl"
-                          name="file"
-                          :show-file-list="true"
-                          :on-success="uploadSucceeded"
-                          :on-error="uploadFailed"
-                      >
-                        <el-button
-                            size="small"
-                            type="primary"
-                            icon="el-icon-upload"
-                        >{{ $t('m.Choose_File') }}</el-button
-                        >
-                      </el-upload>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="24">
-                    <vxe-table
-                        stripe
-                        auto-resize
-                        :data="problemData.problem.testCaseScore"
-                        align="center"
-                    >
-                      <vxe-table-column
-                          field="input"
-                          :title="$t('m.Sample_Input_File')"
-                          min-width="100"
-                      >
-                      </vxe-table-column>
-                      <vxe-table-column
-                          field="output"
-                          :title="$t('m.Sample_Output_File')"
-                          min-width="100"
-                      >
-                      </vxe-table-column>
-                      <vxe-table-column
-                          field="score"
-                          :title="$t('m.Score')"
-                          min-width="100"
-                      >
-                        <template v-slot="{ row }">
-                          <el-input
-                              size="small"
-                              :placeholder="$t('m.Score')"
-                              v-model="row.score"
-                              :disabled="problemData.problem.type == 0"
-                          >
-                          </el-input>
-                        </template>
-                      </vxe-table-column>
-                    </vxe-table>
-                  </el-col>
-                </div>
-
-                <div v-show="!problemData.problem.isUploadCase">
                   <el-form-item
-                      v-for="(value) in problemData.file_names"
+                      v-for="(flag, index) in this.ansData"
+                      :key="'sample' + index"
                   >
                     <Accordion
-                        :title="value"
+                        :title="flag.name"
                         :index="index"
                     >
                       <el-row :gutter="20">
-                        <el-col :xs="24" :md="12">
-                          <el-form-item :label="value">
+                        <el-col :span="24">
+                          <el-form-item :label="flag.name">
                             <el-input
-                                :rows="5"
-                                type="textarea"
+                                v-model="flag.data"
+                                size="medium"
                             >
                             </el-input>
                           </el-form-item>
@@ -826,22 +762,155 @@
                       </el-row>
                     </Accordion>
                   </el-form-item>
-
-
-                </div>
               </el-card>
-              <el-button
-                  type="primary"
-                  icon="el-icon-edit-outline"
-                  size="small"
-                  :loading="submitting"
-                  @click.native="submitCode"
-                  :disabled="problemSubmitDisabled || submitted"
-                  class="fl-right"
-              >
-                <span v-if="submitting">{{ $t('m.Submitting') }}</span>
-                <span v-else>{{ $t('m.Submit') }}</span>
-              </el-button>
+              <el-row>
+                <el-col :sm="24" :md="10" :lg="10" style="margin-top:4px;">
+                  <div v-if="!isAuthenticated">
+                    <el-alert
+                        type="info"
+                        show-icon
+                        effect="dark"
+                        :closable="false"
+                    >{{ $t('m.Please_login_first') }}</el-alert
+                    >
+                  </div>
+                  <div class="status" v-if="statusVisible">
+                    <template v-if="result.status == JUDGE_STATUS_RESERVE['sf']">
+                      <span>{{ $t('m.Status') }}:</span>
+                      <el-tag
+                          effect="dark"
+                          :color="submissionStatus.color"
+                          @click.native="reSubmit(submissionId)"
+                      >
+                        <i class="el-icon-refresh"></i>
+                        {{ submissionStatus.text }}
+                      </el-tag>
+                    </template>
+                    <template
+                        v-else-if="result.status == JUDGE_STATUS_RESERVE['snr']"
+                    >
+                      <el-alert
+                          type="warning"
+                          show-icon
+                          effect="dark"
+                          :closable="false"
+                      >{{ $t('m.Submitted_Not_Result') }}</el-alert
+                      >
+                    </template>
+                    <template
+                        v-else-if="
+                      !this.contestID ||
+                        (this.contestID &&
+                          ContestRealTimePermission &&
+                          this.contestRuleType == RULE_TYPE.OI) ||
+                        (this.contestID &&
+                          this.contestRuleType == RULE_TYPE.ACM)
+                    "
+                    >
+                      <span>{{ $t('m.Status') }}:</span>
+                      <el-tooltip
+                          class="item"
+                          effect="dark"
+                          :content="$t('m.View_submission_details')"
+                          placement="top"
+                      >
+                        <el-tag
+                            effect="dark"
+                            class="submission-status"
+                            :color="submissionStatus.color"
+                            @click.native="submissionRoute"
+                        >
+                          <i class="fa fa-circle" aria-hidden="true"></i>
+                          {{ submissionStatus.text }}
+                        </el-tag>
+                      </el-tooltip>
+                    </template>
+                    <template
+                        v-else-if="
+                      this.contestID &&
+                        !ContestRealTimePermission &&
+                        this.contestRuleType == RULE_TYPE.OI
+                    "
+                    >
+                      <el-alert
+                          type="success"
+                          show-icon
+                          effect="dark"
+                          :closable="false"
+                      >{{ $t('m.Submitted_successfully') }}</el-alert
+                      >
+                    </template>
+                  </div>
+                  <div
+                      v-else-if="
+                    (!this.contestID ||
+                      this.contestRuleType == RULE_TYPE.ACM) &&
+                      problemData.myStatus == JUDGE_STATUS_RESERVE.ac
+                  "
+                  >
+                    <el-alert
+                        type="success"
+                        show-icon
+                        effect="dark"
+                        :closable="false"
+                    >{{ $t('m.You_have_solved_the_problem') }}</el-alert
+                    >
+                  </div>
+                  <div
+                      v-else-if="
+                    this.contestID &&
+                      !ContestRealTimePermission &&
+                      this.contestRuleType == RULE_TYPE.OI &&
+                      submissionExists
+                  "
+                  >
+                    <el-alert
+                        type="success"
+                        show-icon
+                        effect="dark"
+                        :closable="false"
+                    >{{ $t('m.You_have_submitted_a_solution') }}</el-alert
+                    >
+                  </div>
+                  <div v-if="contestEnded">
+                    <el-alert
+                        type="warning"
+                        show-icon
+                        effect="dark"
+                        :closable="false"
+                    >{{ $t('m.Contest_has_ended') }}</el-alert
+                    >
+                  </div>
+                </el-col>
+
+                <el-col :sm="24" :md="14" :lg="14" style="margin-top:4px;">
+                  <template v-if="captchaRequired">
+                    <div class="captcha-container">
+                      <el-tooltip
+                          v-if="captchaRequired"
+                          content="Click to refresh"
+                          placement="top"
+                      >
+                        <img :src="captchaSrc" @click="getCaptchaSrc" />
+                      </el-tooltip>
+                      <el-input v-model="captchaCode" class="captcha-code" />
+                    </div>
+                  </template>
+                  <el-button
+                      type="primary"
+                      icon="el-icon-edit-outline"
+                      size="small"
+                      :loading="submitting"
+                      @click.native="submitAns"
+                      :disabled="problemSubmitDisabled || submitted"
+                      class="fl-right"
+                  >
+                    <span v-if="submitting">{{ $t('m.Submitting') }}</span>
+                    <span v-else>{{ $t('m.Submit') }}</span>
+                  </el-button>
+
+                </el-col>
+              </el-row>
             </el-form>
           </template>
 
@@ -953,8 +1022,10 @@ export default {
         tags: [],
         languages: [],
         codeTemplate: {},
-        file_names:[]
+        file_names:[],
+
       },
+      ansData: [],
       pie: pie,
       largePie: largePie,
       // echarts 无法获取隐藏dom的大小，需手动指定
@@ -1017,7 +1088,7 @@ export default {
 
       if (problemCodeAndSetting) {
         this.language = problemCodeAndSetting.language;
-        this.code = problemCodeAndSetting.code;
+        //this.code = problemCodeAndSetting.code;
         this.theme = problemCodeAndSetting.theme;
         this.fontSize = problemCodeAndSetting.fontSize;
         this.tabSize = problemCodeAndSetting.tabSize;
@@ -1263,7 +1334,12 @@ export default {
             }
 
             this.problemData = result;
-
+            this.ansData = [];
+            for (var i = 0; i < this.problemData.file_names.length; i++) {
+              this.ansData.push({"name":this.problemData.file_names[i], "data":""});
+            }
+            console.log(this.problemData.file_names);
+            console.log(this.ansData);
             this.loading = false;
 
             if (this.isAuthenticated) {
@@ -1311,16 +1387,16 @@ export default {
             }
 
             console.log(this.problemData.problem.difficulty);
-            if (this.problemData.judgeMode == "Submit_Answer" || true) {
-              console.log(this.problemData.judgeMode);
-              this.code = {};
-              this.code["uploadTestcaseDir"] = "";
-              this.code["testCase"] = {};
-              for (var i = 0; i < problemData.file_names.length; i++) {
-                this.code["testCase"][problemData.file_names[i]] = "";
-              }
-              console.log(this.code);
-            }
+            // if (this.problemData.judgeMode == "Submit_Answer") {
+            //   console.log(this.problemData.judgeMode);
+            //   this.code = {};
+            //   this.code["uploadTestcaseDir"] = "";
+            //   this.code["testCase"] = {};
+            //   for (var i = 0; i < problemData.file_names.length; i++) {
+            //     this.code["testCase"][problemData.file_names[i]] = "";
+            //   }
+            //   console.log(this.code);
+            // }
             this.$nextTick((_) => {
               addCodeBtn();
             });
@@ -1534,6 +1610,7 @@ export default {
         code: this.code,
         cid: this.contestID,
         tid: this.trainingID,
+        submitAns: 0,
         gid: this.groupID,
         isRemote: this.isRemote,
       };
@@ -1608,15 +1685,16 @@ export default {
       }
     },
     submitAns() {
-      if (this.code.trim() === '') {
-        myMessage.error(this.$i18n.t('m.Code_can_not_be_empty'));
-        return;
+      this.code = `#include <cstdio>
+      int main() {
+        int a;
+        scanf("%d", &a);
+        switch (a){
+`;
+      for (var i = 0; i < this.ansData.length; i++) {
+        this.code += 'case ' + i + ':printf("' + this.ansData[i].data + '");break;\n';
       }
-
-      if (this.code.length > 65535) {
-        myMessage.error(this.$i18n.t('m.Code_Length_can_not_exceed_65535'));
-        return;
-      }
+      this.code += "}}";
 
       // 比赛题目需要检查是否有权限提交
       if (!this.canSubmit && this.$route.params.contestID) {
@@ -1629,10 +1707,12 @@ export default {
       this.submitting = true;
       let data = {
         pid: this.problemID, // 如果是比赛题目就为display_id
-        language: this.language,
+        language: 'C++',
         code: this.code,
         cid: this.contestID,
         tid: this.trainingID,
+        submitAns: 1,
+        submitAnsData: JSON.stringify(this.ansData),
         gid: this.groupID,
         isRemote: this.isRemote,
       };
