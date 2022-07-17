@@ -49,7 +49,7 @@
               width="100"
           >
             <template v-slot="{ row }">
-              <span>{{ row.rpchangeId }}</span>
+              <span>{{ row.id }}</span>
             </template>
           </vxe-table-column>
 
@@ -59,7 +59,7 @@
               min-width="80"
           >
             <template v-slot="{ row }">
-              <span>{{ row.rpchange }}</span>
+              <span>{{ row.rpChange }}</span>
             </template>
           </vxe-table-column>
 
@@ -85,10 +85,10 @@
             <template v-slot="{ row }">
               <span
               ><el-tooltip
-                  :content="row.rpchangeTime | localtime"
+                  :content="row.gmtCreate | localtime"
                   placement="top"
               >
-                  <span>{{ row.rpchangeTime | fromNow }}</span>
+                  <span>{{ row.gmtCreate | fromNow }}</span>
                 </el-tooltip></span
               >
             </template>
