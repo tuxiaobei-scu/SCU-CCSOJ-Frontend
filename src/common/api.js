@@ -1014,6 +1014,11 @@ const ojApi = {
       params: { cid }
     })
   },
+  addMotto(motto) {
+    return ajax("/api/motto", 'put', {
+      params: { motto }
+    })
+  },
 
   addGroupContest(data) {
     return ajax("/api/group/contest", 'post', {
