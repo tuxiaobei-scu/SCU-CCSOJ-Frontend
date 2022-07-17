@@ -29,48 +29,56 @@
           </el-carousel>
         </el-card>
         <Announcements class="card-top"></Announcements>
-<!--        <el-card class="card-top">-->
-<!--          <div slot="header" class="clearfix">-->
-<!--            <span class="panel-title home-title">{{-->
-<!--              $t('m.Other_OJ_Contest')-->
-<!--            }}</span>-->
-<!--          </div>-->
-<!--          <vxe-table-->
-<!--            border="inner"-->
-<!--            highlight-hover-row-->
-<!--            stripe-->
-<!--            :loading="loading.recentOtherContestsLoading"-->
-<!--            auto-resize-->
-<!--            :data="otherContests"-->
-<!--            @cell-click="goOtherOJContest"-->
-<!--          >-->
-<!--            <vxe-table-column-->
-<!--              field="oj"-->
-<!--              :title="$t('m.Recent_Contest')"-->
-<!--              min-width="150"-->
-<!--              show-overflow-->
-<!--              header-align="center"-->
-<!--            >-->
-<!--              <template v-slot="{ row }">-->
-<!--                <span>[{{ row.oj }}] {{ row.title }}</span>-->
-<!--              </template>-->
-<!--            </vxe-table-column>-->
-<!--            <vxe-table-column-->
-<!--              field="beginTime"-->
-<!--              :title="$t('m.Contest_Time')"-->
-<!--              show-overflow-->
-<!--              min-width="150"-->
-<!--              align="center"-->
-<!--            >-->
-<!--              <template v-slot="{ row }">-->
-<!--                <span-->
-<!--                  >{{ row.beginTime | localtime }} ~-->
-<!--                  {{ row.endTime | localtime }}</span-->
-<!--                >-->
-<!--              </template>-->
-<!--            </vxe-table-column>-->
-<!--          </vxe-table>-->
-<!--        </el-card>-->
+        <el-card class="card-top">
+          <div slot="header" class="clearfix">
+            <span class="panel-title home-title">{{
+              $t('m.Other_OJ_Contest')
+            }}</span>
+          </div>
+          <vxe-table
+            border="inner"
+            highlight-hover-row
+            stripe
+            :loading="loading.recentOtherContestsLoading"
+            auto-resize
+            :data="otherContests"
+            @cell-click="goOtherOJContest"
+          >
+            <vxe-table-column
+              field="oj"
+              :title="$t('m.Recent_Contest')"
+              min-width="150"
+              show-overflow
+              header-align="center"
+            >
+              <template v-slot="{ row }">
+                <span>[{{ row.oj }}] {{ row.title }}</span>
+              </template>
+            </vxe-table-column>
+            <vxe-table-column
+              field="beginTime"
+              :title="$t('m.Contest_Time')"
+              show-overflow
+              min-width="150"
+              align="center"
+            >
+              <template v-slot="{ row }">
+                <span
+                  >{{ row.beginTime | localtime }} ~
+                  {{ row.endTime | localtime }}</span
+                >
+              </template>
+            </vxe-table-column>
+          </vxe-table>
+        </el-card>
+
+        <el-card class="card-top">
+          <div slot="header" class="clearfix">
+            <span class="panel-title home-title">犇犇</span>
+          </div>
+          <comment :did="1"></comment>
+        </el-card>
+
       </el-col>
       <el-col :md="9" :sm="24" class="phone-margin">
         <template v-if="contests.length">
@@ -298,11 +306,25 @@
             <span class="home-title panel-title">
               {{ $t('m.Motto') }}
             </span>
-            <template>
-              <el-button class="mottobutton" type="primary" round @click="getMessageBox">提交按钮</el-button>
-            </template>
+
           </div>
           {{ hitokoto }}
+        </el-card>
+
+        <el-card class="card-top">
+          <div slot="header" class="clearfix title">
+            <span class="home-title panel-title">
+               Daily check
+
+            </span>
+            <el-button type="primary" class="btn_position">Today's check-in ranking</el-button>
+          </div>
+          <div v-if="isUserChecked">
+            <p>你已经连续签到 天，今日获得 </p>
+          </div>
+          <div v-else>
+            <el-button type="primary" @click="getUserChecked()">每日签到</el-button>
+          </div>
         </el-card>
 
       </el-col>
@@ -321,14 +343,17 @@ import { mapState, mapGetters } from 'vuex';
 import Avatar from 'vue-avatar';
 import myMessage from '@/common/message';
 const Announcements = () => import('@/components/oj/common/Announcements.vue');
+const comment = () => import('@/components/oj/comment/comment');
 export default {
   name: 'home',
   components: {
     Announcements,
     Avatar,
+    comment,
   },
   data() {
     return {
+      isUserChecked: false,
       hitokoto: "",
       interval: 5000,
       otherContests: [],
@@ -499,32 +524,14 @@ export default {
     getRankTagClass(rowIndex) {
       return 'rank-tag no' + (rowIndex + 1);
     },
-    getMessageBox() {
-      this.$prompt('请输入一言（50字以内）', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-      }).then(({ value }) => {
-
-        this.$message({
-          type: 'success',
-          message: '你輸入的一言为: ' + value,
-        });
-        api.addMotto(value).then((res) => {
-
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
-      });
+    getUserChecked(){
+      this.isUserChecked = true;
     }
   },
   computed: {
     ...mapState(['websiteConfig']),
     ...mapGetters(['isAuthenticated']),
   },
-
 };
 </script>
 <style>
@@ -533,6 +540,9 @@ export default {
 }
 .contest-card-schedule {
   border-color: #f90;
+}
+.btn_position {
+  float: right;
 }
 </style>
 <style scoped>
@@ -720,11 +730,6 @@ span.rank-tag {
 .cite.no2 {
   border-top: 5px solid #e6bf25;
 }
-.mottobutton{
-  float: right;
-  display: inline;
-}
-
 
 @media screen and (min-width: 1050px) {
   /deep/ .vxe-table--body-wrapper {
