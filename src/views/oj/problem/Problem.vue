@@ -229,17 +229,64 @@
                     </div>
                   </template>
 
-                  <template v-if="problemData.problem.hint">
-                    <p class="title">{{ $t('m.Hint') }}</p>
-                    <el-card dis-hover>
-                      <p
-                          class="hint-content markdown-body"
-                          v-html="problemData.problem.hint"
-                          v-katex
-                          v-highlight
-                      ></p>
-                    </el-card>
-                  </template>
+
+<!--                  <el-button text @click="dialogVisible = true"-->
+<!--                  >{{$t('m.Hint')}}</el-button>-->
+
+<!--                  <el-dialog-->
+<!--                      :title="$t('m.Hint')"-->
+<!--                      :visible.sync="dialogVisible"-->
+<!--                      width="30%"-->
+<!--                  >-->
+<!--                    <p-->
+<!--                        class="content markdown-body"-->
+<!--                        v-html="problemData.problem.hint"-->
+<!--                        v-katex-->
+<!--                        v-highlight-->
+<!--                    ></p>-->
+<!--                    <span slot="footer" class="dialog-footer">-->
+<!--                      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+<!--                    </span>-->
+<!--                  </el-dialog>-->
+                      <el-button text @click="confirmVisible = true"
+                      >{{$t('m.Hint')}}</el-button>
+
+                      <el-dialog
+                          :title="$t('m.Hint')"
+                          :visible.sync="confirmVisible"
+                          width="30%"
+                      >
+                        <p
+                            class="content markdown-body"
+                            v-html="$t('m.Get_Hint_Warning')"
+                            v-katex
+                            v-highlight
+                        ></p>
+                          <el-button text @click="changeRP"
+                          >{{$t('m.Confirm')}}</el-button>
+
+                          <el-dialog
+                              :title="$t('m.Hint')"
+                              :visible.sync="dialogVisible"
+                              width="30%"
+                          >
+                            <p
+                                class="content markdown-body"
+                                v-html="hint"
+                                v-katex
+                                v-highlight
+                            ></p>
+                                <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="dialogVisible = false, confirmVisible = false">确 定</el-button>
+                          </span>
+                        </el-dialog>
+
+
+                      </el-dialog>
+
+
+
+
                   <!-- 下载文件
                   <template v-if="problemData.problem.HasFile">
                     <el-tooltip
@@ -846,7 +893,12 @@ import Pagination from '@/components/oj/common/Pagination';
 // 只显示这些状态的图形占用
 const filtedStatus = ['wa', 'ce', 'ac', 'pa', 'tle', 'mle', 're', 'pe'];
 
+
+
+
 export default {
+
+
   name: 'ProblemDetails',
   components: {
     CodeMirror,
@@ -862,10 +914,13 @@ export default {
       captchaSrc: '',
       contestID: 0,
       groupID: null,
+      dialogVisible: false,
+      confirmVisible: false,
       problemID: '',
       trainingID: null,
       submitting: false,
       code: '',
+      hint: '',
       language: '',
       isRemote: false,
       theme: 'solarized',
@@ -940,6 +995,8 @@ export default {
   },
   methods: {
     ...mapActions(['changeDomTitle']),
+
+
     initProblemCodeAndSetting(){
       // 获取缓存中的该题的做题代码，代码语言，代码风格
       let problemCodeAndSetting = storage.get(
@@ -963,6 +1020,14 @@ export default {
         }
       }
     },
+
+    changeRP() {
+      api.getHint(this.problemID).then(res => {
+        this.hint = res.data;
+      });
+      this.dialogVisible = true
+    },
+
     handleClickTab({ name }) {
       if (name == 'mySubmission' && this.isAuthenticated) {
         this.getMySubmission();
@@ -976,7 +1041,7 @@ export default {
       });
     },
 
-          getMySubmission() {
+    getMySubmission() {
       let params = {
         onlyMine: true,
         currentPage: this.mySubmission_currentPage,
@@ -1685,6 +1750,7 @@ export default {
 </style>
 
 <style scoped>
+
 @media screen and (min-width: 1050px) {
   .problem-body {
     margin-left: -2%;

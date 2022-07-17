@@ -247,6 +247,7 @@ export const m = {
   Sample_Input: 'Sample Input',
   Sample_Output: 'Sample Output',
   Hint: 'Hint',
+  Gt_Hint_Warning: 'Sure to spend your score to get hint?',
   Source: 'Source',
   Status: 'Status',
   RPStatus: 'RPStatus',
@@ -698,5 +699,6 @@ export const m = {
   Group_Problem_Apply_Public:'Apply to join the public problem bank',
   Already_Public_Problem:'Already in the public problem bank',
   Group_Problem_Apply_Public_Tips:'Are you sure you want to apply for this problem to be added to the public bank?',
-  Cancel_Group_Problem_Apply_Public_Tips:'Do you want to cancel the application for this problem to be added to the public bank?'
+  Cancel_Group_Problem_Apply_Public_Tips:'Do you want to cancel the application for this problem to be added to the public bank?',
+  Confirm: 'confirm'
 }

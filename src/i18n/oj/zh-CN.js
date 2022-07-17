@@ -239,7 +239,6 @@ export const m = {
   No_tag: '暂无标签',
   Statistic: '题目统计',
   Solutions: '全部提交',
-  Problem_Discussion: '题目讨论',
   Description: '题目描述',
   Input: '输入描述',
   Output: '输出描述',
@@ -280,7 +279,6 @@ export const m = {
 
   // /views/oj/status/SubmissionList.vue
   Mine: '我的',
-  ID: 'ID',
   Time: '运行时间',
   Memory: '运行内存',
   Length: '代码长度',

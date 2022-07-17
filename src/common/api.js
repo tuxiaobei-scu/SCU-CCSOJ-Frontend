@@ -554,6 +554,12 @@ const ojApi = {
     })
   },
 
+  getHint(params){
+    return ajax('/api/get-hint', 'get', {
+      params
+    })
+  },
+
   // ACM、OI、CTF赛制的排行榜
   getUserRank(currentPage,limit,type,searchUser){
     return ajax('/api/get-rank-list','get',{

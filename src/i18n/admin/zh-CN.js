@@ -287,6 +287,7 @@ export const m = {
   Use_Upload_File: '使用上传文件',
   Use_Manual_Input: '使用手动输入',
   Hint: '提示',
+  Get_Hint_Warning: '确认使用分数来获取提示吗？',
   Source: '来源',
   Auto_Remove_the_Blank_at_the_End_of_Code: '自动去除代码每行末尾空白符',
   Publish_the_Judging_Result_of_Test_Data: '公开评测点数据结果',
@@ -438,5 +439,6 @@ export const m = {
   // components/admin/AddExtraFile.vue
   Delete_Extra_File_Tips: '你是否确定要删除该额外文件?',
   File_Name: '文件名字',
-  File_Content: '文件内容'
+  File_Content: '文件内容',
+  Confirm: '确定'
 }
