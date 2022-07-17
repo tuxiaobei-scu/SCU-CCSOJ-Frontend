@@ -371,7 +371,6 @@
               <p>1. {{ $t('m.General_Judge_Mode_Tips') }}</p>
               <p>2. {{ $t('m.Special_Judge_Mode_Tips') }}</p>
               <p>3. {{ $t('m.Interactive_Judge_Mode_Tips') }}</p>
-              <p>4. {{ $t('m.Submit_Answer_Judge_Mode_Tips') }}</p>
               <i slot="reference" class="el-icon-question"></i>
             </el-popover>
           </div>
@@ -383,13 +382,10 @@
                 <el-radio label="interactive">{{
                   $t('m.Interactive_Judge')
                 }}</el-radio>
-                <el-radio label="Submit_Answer">{{
-                    $t('m.Submit_Answer')
-                  }}</el-radio>
               </el-radio-group>
             </el-col>
           </el-form-item>
-          <el-form-item v-if="problem.judgeMode != 'default' && problem.judgeMode != 'Submit_Answer'">
+          <el-form-item v-if="problem.judgeMode != 'default'">
             <Accordion
               :title="
                 problem.judgeMode == 'spj'
@@ -473,6 +469,7 @@
             v-model="problem.isUploadCase"
             :active-text="$t('m.Use_Upload_File')"
             :inactive-text="$t('m.Use_Manual_Input')"
+            :disabled="problem.type == 2"
             style="margin: 10px 0"
           >
           </el-switch>
@@ -555,7 +552,7 @@
                   {{ $t('m.Delete') }}
                 </el-button>
                 <el-row :gutter="20">
-                  <el-col :xs="24" :md="12">
+                  <el-col :xs="24" :md="12" v-show="problem.type != 2">
                     <el-form-item :label="$t('m.Sample_Input')">
                       <el-input
                         :rows="5"
@@ -566,13 +563,23 @@
                       </el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :xs="24" :md="12">
-                    <el-form-item :label="problem.type != 2 ? $t('m.Sample_Output') : $t('m.Flag')">
+                  <el-col :xs="24" :md="12" v-show="problem.type != 2">
+                    <el-form-item :label="$t('m.Sample_Output')">
                       <el-input
                         :rows="5"
                         type="textarea"
                         :placeholder="$t('m.Sample_Output')"
                         v-model="sample.output"
+                      >
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24" v-show="problem.type == 2">
+                    <el-form-item :label="$t('m.Flag')">
+                      <el-input
+                          size="small"
+                          :placeholder="$t('m.Flag')"
+                          v-model="sample.output"
                       >
                       </el-input>
                     </el-form-item>
@@ -895,7 +902,7 @@ export default {
     },
 
     'problem.spjLanguage'(newVal) {
-      if (this.allSpjLanguage.length && this.problem.judgeMode != 'default' && problem.judgeMode != 'Submit_Answer') {
+      if (this.allSpjLanguage.length && this.problem.judgeMode != 'default') {
         this.spjMode = this.allSpjLanguage.find((item) => {
           return item.name == this.problem.spjLanguage && item.isSpj == true;
         })['contentType'];
@@ -994,9 +1001,6 @@ export default {
       } else if (mode == 'interactive') {
         modeName = 'Interactive_Judge';
         modeTips = 'Interactive_Judge_Mode_Tips';
-      } else if (mode == "Submit_Answer") {
-        modeName = 'Submit_Answer';
-        modeTips = 'Submit_Answer_Judge_Mode_Tips';
       }
       const h = this.$createElement;
       this.$msgbox({
@@ -1116,8 +1120,8 @@ export default {
       }
       else if (type == 2) {
         this.problem.openCaseResult = false;
-        this.problem.isUploadCase = false
-        this.problem.judgeMode = "Submit_Answer";
+        this.problem.isUploadCase = false;
+        this.problem.isUploadCase = false;
       }
     },
 
@@ -1226,6 +1230,12 @@ export default {
     },
 
     submit() {
+      if (this.problem.type == 2) {
+        for (var i = 0; i < this.problemSamples.length; i++) {
+          this.problemSamples[i].input = i.toString();
+        }
+      }
+
       if (!this.problem.problemId) {
         myMessage.error(
           this.$i18n.t('m.Problem_Display_ID') +
@@ -1371,7 +1381,7 @@ export default {
         this.spjRecord.spjLanguage != this.problem.spjLanguage ||
         this.spjRecord.spjCode != this.problem.spjCode;
       if (!this.problem.isRemote) {
-        if (this.problem.judgeMode != 'default' && this.problem.judgeMode != 'Submit_Answer') {
+        if (this.problem.judgeMode != 'default') {
           if (!this.problem.spjCode) {
             this.error.spj =
               this.$i18n.t('m.Spj_Or_Interactive_Code') +
@@ -1454,7 +1464,7 @@ export default {
       }
       let problemDto = {}; // 上传给后台的数据
       if (!this.problem.isRemote) {
-        if (this.problem.judgeMode != 'default' && this.problem.judgeMode != 'Submit_Answer') {
+        if (this.problem.judgeMode != 'default') {
           if (isChangeModeCode) {
             problemDto['changeModeCode'] = true;
           }

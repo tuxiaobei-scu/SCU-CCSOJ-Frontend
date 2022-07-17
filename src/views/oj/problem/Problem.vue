@@ -830,6 +830,18 @@
 
                 </div>
               </el-card>
+              <el-button
+                  type="primary"
+                  icon="el-icon-edit-outline"
+                  size="small"
+                  :loading="submitting"
+                  @click.native="submitCode"
+                  :disabled="problemSubmitDisabled || submitted"
+                  class="fl-right"
+              >
+                <span v-if="submitting">{{ $t('m.Submitting') }}</span>
+                <span v-else>{{ $t('m.Submit') }}</span>
+              </el-button>
             </el-form>
           </template>
 
@@ -1002,6 +1014,7 @@ export default {
       let problemCodeAndSetting = storage.get(
           buildProblemCodeAndSettingKey(this.$route.params.problemID, this.$route.params.contestID)
       );
+
       if (problemCodeAndSetting) {
         this.language = problemCodeAndSetting.language;
         this.code = problemCodeAndSetting.code;
@@ -1019,6 +1032,7 @@ export default {
           this.tabSize = individualLanguageAndSetting.tabSize;
         }
       }
+
     },
 
     changeRP() {
@@ -1281,6 +1295,7 @@ export default {
             if (this.code !== '') {
               return;
             }
+
             if (this.problemData.languages.length != 0) {
               if (
                   !this.language ||
@@ -1294,14 +1309,28 @@ export default {
             if (codeTemplate && codeTemplate[this.language]) {
               this.code = codeTemplate[this.language];
             }
+
+            console.log(this.problemData.problem.difficulty);
+            if (this.problemData.judgeMode == "Submit_Answer" || true) {
+              console.log(this.problemData.judgeMode);
+              this.code = {};
+              this.code["uploadTestcaseDir"] = "";
+              this.code["testCase"] = {};
+              for (var i = 0; i < problemData.file_names.length; i++) {
+                this.code["testCase"][problemData.file_names[i]] = "";
+              }
+              console.log(this.code);
+            }
             this.$nextTick((_) => {
               addCodeBtn();
             });
+
           },
           (err) => {
             this.loading = false;
           }
       );
+
     },
     changePie(problemData) {
       let total = problemData.total;
@@ -1480,6 +1509,105 @@ export default {
     },
 
     submitCode() {
+      if (this.code.trim() === '') {
+        myMessage.error(this.$i18n.t('m.Code_can_not_be_empty'));
+        return;
+      }
+
+      if (this.code.length > 65535) {
+        myMessage.error(this.$i18n.t('m.Code_Length_can_not_exceed_65535'));
+        return;
+      }
+
+      // 比赛题目需要检查是否有权限提交
+      if (!this.canSubmit && this.$route.params.contestID) {
+        this.submitPwdVisible = true;
+        return;
+      }
+
+      this.submissionId = '';
+      this.result = { status: 9 };
+      this.submitting = true;
+      let data = {
+        pid: this.problemID, // 如果是比赛题目就为display_id
+        language: this.language,
+        code: this.code,
+        cid: this.contestID,
+        tid: this.trainingID,
+        gid: this.groupID,
+        isRemote: this.isRemote,
+      };
+      if (this.captchaRequired) {
+        data.captcha = this.captchaCode;
+      }
+      const submitFunc = (data, detailsVisible) => {
+        this.statusVisible = true;
+        api.submitCode(data).then(
+            (res) => {
+              this.submissionId = res.data.data && res.data.data.submitId;
+              // 定时检查状态
+              this.submitting = false;
+              this.submissionExists = true;
+              if (!detailsVisible) {
+                this.$Modal.success({
+                  title: 'Success',
+                  content: this.$i18n.t('m.Submit_code_successfully'),
+                });
+                return;
+              } else {
+                myMessage.success(this.$i18n.t('m.Submit_code_successfully'));
+              }
+              // 更新store的可提交权限
+              if (!this.canSubmit) {
+                this.$store.commit('contestIntoAccess', { access: true });
+              }
+              this.submitted = true;
+              this.checkSubmissionStatus();
+            },
+            (res) => {
+              // this.getCaptchaSrc();
+              // if (res.data.data.startsWith('Captcha is required')) {
+              //   this.captchaRequired = true;
+              // }
+              this.submitting = false;
+              this.statusVisible = false;
+            }
+        );
+      };
+
+      if (
+          this.contestRuleType === RULE_TYPE.OI &&
+          !this.ContestRealTimePermission
+      ) {
+        if (this.submissionExists) {
+          this.$confirm(
+              this.$i18n.t(
+                  'm.You_have_submission_in_this_problem_sure_to_cover_it'
+              ),
+              'Warning',
+              {
+                confirmButtonText: this.$i18n.t('m.OK'),
+                cancelButtonText: this.$i18n.t('m.Cancel'),
+                type: 'warning',
+              }
+          )
+              .then(() => {
+                // 暂时解决对话框与后面提示对话框冲突的问题(否则一闪而过）
+                setTimeout(() => {
+                  submitFunc(data, false);
+                }, 1000);
+              })
+              .catch(() => {
+                this.submitting = false;
+              });
+        } else {
+          submitFunc(data, false);
+        }
+      } else {
+        submitFunc(data, true);
+      }
+    },
+    submitAns() {
       if (this.code.trim() === '') {
         myMessage.error(this.$i18n.t('m.Code_can_not_be_empty'));
         return;

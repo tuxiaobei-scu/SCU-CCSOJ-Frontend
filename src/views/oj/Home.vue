@@ -298,7 +298,9 @@
             <span class="home-title panel-title">
               {{ $t('m.Motto') }}
             </span>
-
+            <template>
+              <el-button class="mottobutton" type="primary" round @click="getMessageBox">提交按钮</el-button>
+            </template>
           </div>
           {{ hitokoto }}
         </el-card>
@@ -497,11 +499,32 @@ export default {
     getRankTagClass(rowIndex) {
       return 'rank-tag no' + (rowIndex + 1);
     },
+    getMessageBox() {
+      this.$prompt('请输入一言（50字以内）', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+
+        this.$message({
+          type: 'success',
+          message: '你輸入的一言为: ' + value,
+        });
+        api.addMotto(value).then((res) => {
+
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+    }
   },
   computed: {
     ...mapState(['websiteConfig']),
     ...mapGetters(['isAuthenticated']),
   },
+
 };
 </script>
 <style>
@@ -697,6 +720,11 @@ span.rank-tag {
 .cite.no2 {
   border-top: 5px solid #e6bf25;
 }
+.mottobutton{
+  float: right;
+  display: inline;
+}
+
 
 @media screen and (min-width: 1050px) {
   /deep/ .vxe-table--body-wrapper {
