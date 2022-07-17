@@ -315,16 +315,12 @@
           <div slot="header" class="clearfix title">
             <span class="home-title panel-title">
                Daily check
-<!--               <vxe-table-column-->
-<!--                   field="Today's check-in ranking"-->
-<!--                   align="right"-->
-<!--               >-->
-<!--            </vxe-table-column>-->
+
             </span>
             <el-button type="primary" class="btn_position">Today's check-in ranking</el-button>
           </div>
           <div v-if="isUserChecked">
-            <p>hahahhahahahahahah</p>
+            <p>你已经连续签到 天，今日获得 </p>
           </div>
           <div v-else>
             <el-button type="primary" @click="getUserChecked()">每日签到</el-button>
