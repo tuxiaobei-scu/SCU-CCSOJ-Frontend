@@ -306,7 +306,9 @@
             <span class="home-title panel-title">
               {{ $t('m.Motto') }}
             </span>
-
+           <template>
+             <el-button class="mottobutton" type="primary" round @click="getMessageBox">提交按钮</el-button>
+           </template>
           </div>
           {{ hitokoto }}
         </el-card>
@@ -417,7 +419,7 @@ export default {
           status: true,
         },
       ],
-      motto:[
+      motto: [
         {
           url: 'https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335',
         }
@@ -451,13 +453,13 @@ export default {
     getRecentContests() {
       this.loading.recentContests = true;
       api.getRecentContests().then(
-        (res) => {
-          this.contests = res.data.data;
-          this.loading.recentContests = false;
-        },
-        (err) => {
-          this.loading.recentContests = false;
-        }
+          (res) => {
+            this.contests = res.data.data;
+            this.loading.recentContests = false;
+          },
+          (err) => {
+            this.loading.recentContests = false;
+          }
       );
     },
     // getRecentOtherContests() {
@@ -480,23 +482,23 @@ export default {
     getRecent7ACRank() {
       this.loading.recent7ACRankLoading = true;
       api.getRecent7ACRank().then(
-        (res) => {
-          this.recentUserACRecord = res.data.data;
-          this.loading.recent7ACRankLoading = false;
-        },
-        (err) => {
-          this.loading.recent7ACRankLoading = false;
-        }
+          (res) => {
+            this.recentUserACRecord = res.data.data;
+            this.loading.recent7ACRankLoading = false;
+          },
+          (err) => {
+            this.loading.recent7ACRankLoading = false;
+          }
       );
     },
     goContest(cid) {
       if (!this.isAuthenticated) {
         myMessage.warning(this.$i18n.t('m.Please_login_first'));
-        this.$store.dispatch('changeModalStatus', { visible: true });
+        this.$store.dispatch('changeModalStatus', {visible: true});
       } else {
         this.$router.push({
           name: 'ContestDetails',
-          params: { contestID: cid },
+          params: {contestID: cid},
         });
       }
     },
@@ -515,7 +517,7 @@ export default {
     goUserHome(username, uid) {
       this.$router.push({
         path: '/user-home',
-        query: { uid, username },
+        query: {uid, username},
       });
     },
     getDuration(startTime, endTime) {
@@ -524,8 +526,28 @@ export default {
     getRankTagClass(rowIndex) {
       return 'rank-tag no' + (rowIndex + 1);
     },
-    getUserChecked(){
+    getUserChecked() {
       this.isUserChecked = true;
+    },
+    getMessageBox() {
+      this.$prompt('请输入一言（50字内）','提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+        this.$message({
+          type: 'success',
+          message: '你输入的一言为：' + value,
+        });
+        api.addMotto(value).then((res) =>{
+
+        });
+
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
     }
   },
   computed: {
@@ -731,6 +753,10 @@ span.rank-tag {
   border-top: 5px solid #e6bf25;
 }
 
+.mottobutton{
+  float:right;
+  display:inline;
+}
 @media screen and (min-width: 1050px) {
   /deep/ .vxe-table--body-wrapper {
     overflow-x: hidden !important;

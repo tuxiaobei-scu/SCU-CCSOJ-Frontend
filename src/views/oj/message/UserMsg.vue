@@ -87,16 +87,24 @@
           </div>
         </div>
         <div class="link-discussion">
-          <span
+          <template v-if="item.url != '/discussion-detail/1'">
+            <span
+              >{{
+                item.sourceType == 'Discussion'
+                  ? $t('m.From_Discussion_Post')
+                  : $t('m.From_the_Contest')
+              }}
+              <span class="title" @click="goMsgSourceUrl(item.url)"
+                >“{{ item.sourceTitle }}”</span>
+            </span>
+          </template>
+          <template v-else>
+            <span
             >{{
-              item.sourceType == 'Discussion'
-                ? $t('m.From_Discussion_Post')
-                : $t('m.From_the_Contest')
-            }}
-            <span class="title" @click="goMsgSourceUrl(item.url)"
-              >“{{ item.sourceTitle }}”</span
-            ></span
-          >
+                $t('m.From_Benben')
+              }}
+            </span>
+          </template>
         </div>
       </el-card>
     </template>
