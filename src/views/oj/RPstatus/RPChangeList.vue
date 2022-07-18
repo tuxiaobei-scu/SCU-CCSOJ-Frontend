@@ -390,11 +390,7 @@ export default {
 
       if (!equal) {
         // 避免重复同个路径请求导致报错
-        let routeName = queryParams.contestID
-            ? 'ContestRpchangeList'
-            : this.groupID
-                ? 'GroupRpchangeList'
-                : 'RpchangeList';
+        let routeName = 'RPChangeList';
         this.$router.push({
           name: routeName,
           query: queryParams,
