@@ -670,7 +670,11 @@ const ojApi = {
       data
     })
   },
-
+  getUserChecked(params){
+    return ajax('/api/get-user-checked', 'get', {
+      params
+    })
+  },
   getCommentList(params){
     return ajax("/api/comments",'get',{
       params
