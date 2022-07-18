@@ -6,9 +6,21 @@
           <el-row :gutter="18">
             <el-col :md="4" :lg="2">
               <span class="panel-title hidden-md-and-down">{{
-                  $t('m.Status')
+                  $t('m.RPStatus')
                 }}</span>
             </el-col>
+            <el-col :xs="10" :sm="8" :md="4" :lg="4">
+              <el-switch
+                  style="display: block"
+                  v-model="formFilter.onlyMine"
+                  :active-text="$t('m.Mine')"
+                  :width="40"
+                  @change="handleOnlyMine"
+                  :inactive-text="$t('m.All')"
+              >
+              </el-switch>
+            </el-col>
+
             <el-col :sm="8" :md="5" :lg="4" class="hidden-xs-only">
               <el-button
                   type="primary"
@@ -27,6 +39,17 @@
                   circle
                   @click="getRpchanges"
               ></el-button>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="5" :lg="5" class="search">
+              <vxe-input
+                  v-model="formFilter.username"
+                  :disabled="formFilter.onlyMine"
+                  :placeholder="$t('m.Enter_Username')"
+                  type="search"
+                  size="medium"
+                  @keyup.enter.native="handleQueryChange('username')"
+                  @search-click="handleQueryChange('username')"
+              ></vxe-input>
             </el-col>
           </el-row>
         </div>
@@ -387,7 +410,7 @@ export default {
         query: { uid, username },
       });
     },
-    handleStatusChange(status) {
+    handleRPStatusChange(status) {
       if (status == 'All') {
         this.formFilter.status = '';
       } else {
@@ -403,7 +426,20 @@ export default {
       this.currentPage = 1;
       this.changeRoute();
     },
-
+    handleOnlyMine() {
+      if (this.formFilter.onlyMine) {
+        // 需要判断是否为登陆状态
+        if (this.isAuthenticated) {
+          this.formFilter.username = '';
+        } else {
+          this.formFilter.onlyMine = false;
+          myMessage.error(this.$i18n.t('m.Please_login_first'));
+          return;
+        }
+      }
+      this.currentPage = 1;
+      this.changeRoute();
+    },
 
     tableRowClassName({ row, rowIndex }) {
       if (row.username == this.userInfo.username && this.isAuthenticated) {

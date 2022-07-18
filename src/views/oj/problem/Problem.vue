@@ -276,7 +276,7 @@
                                 v-katex
                                 v-highlight
                             ></p>
-                                <span slot="footer" class="dialog-footer">
+                            <span slot="footer" class="dialog-footer">
                             <el-button type="primary" @click="dialogVisible = false, confirmVisible = false">确 定</el-button>
                           </span>
                         </el-dialog>
@@ -1107,9 +1107,16 @@ export default {
     },
 
     changeRP() {
-      api.getHint(this.problemID).then(res => {
-        this.hint = res.data;
-      });
+      let params = {
+        problemId: this.problemID,
+      };
+      let func='getHint';
+      api[func](params)
+          .then(
+              (res) => {
+                this.hint = res.data;
+              },
+              );
       this.dialogVisible = true
     },
 

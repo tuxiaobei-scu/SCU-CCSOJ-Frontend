@@ -294,6 +294,7 @@ export const m = {
   Refresh: '刷新',
   Enter_Problem_ID: '请输入题目ID',
   Enter_Author: '请输入作者',
+  Enter_Username: '请输入用户名',
   Run_ID: 'Run ID',
   RPChange_ID: 'RPChange ID',
   RPChange: 'RP改变量',

@@ -297,6 +297,7 @@ export const m = {
   Refresh: 'Refresh',
   Enter_Problem_ID: 'Enter Problem ID',
   Enter_Author: 'Enter Author',
+  Enter_Username: 'Enter Author',
   Run_ID: 'Run ID',
   RPChange_ID: 'RPChange ID',
   RPChange: 'RPChange',
