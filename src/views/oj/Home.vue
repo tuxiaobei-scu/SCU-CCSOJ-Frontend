@@ -33,7 +33,7 @@
 
         <el-card class="card-top">
           <div slot="header" class="clearfix">
-            <span class="panel-title home-title">犇犇</span>
+            <span class="panel-title home-title">{{ $t("m.Benben") }}</span>
           </div>
           <comment :did="1"></comment>
         </el-card>
@@ -266,7 +266,7 @@
               {{ $t('m.Motto') }}
             </span>
            <template>
-             <el-button class="mottobutton" type="primary" round @click="getMessageBox">提交按钮</el-button>
+             <el-button class="mottobutton" type="primary" round @click="getMessageBox">{{ $t('m.Submit_motto') }}</el-button>
            </template>
           </div>
           {{ hitokoto }}

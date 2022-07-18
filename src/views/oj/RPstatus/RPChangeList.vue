@@ -87,6 +87,16 @@
           </vxe-table-column>
 
           <vxe-table-column
+              field="RPChange"
+              title="RP"
+              min-width="80"
+          >
+            <template v-slot="{ row }">
+              <span>{{ row.rp }}</span>
+            </template>
+          </vxe-table-column>
+
+          <vxe-table-column
               field="username"
               :title="$t('m.User')"
               min-width="96"
