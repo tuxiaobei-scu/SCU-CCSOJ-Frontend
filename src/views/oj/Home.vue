@@ -281,7 +281,7 @@
             <el-button type="primary" class="btn_position">Today's check-in ranking</el-button>
           </div>
           <div v-if="isUserChecked">
-            <p>你已经连续签到{{ row.lianxuqiandao }}}天，今日{{ row.lianxuqiandao }}获得 </p>
+            <p>你已经连续签到1天，今日1rp获得 </p>
           </div>
           <div v-else>
             <el-button type="primary" @click="getUserChecked()">每日签到</el-button>
@@ -487,18 +487,18 @@ export default {
     },
     getUserChecked() {
       this.isUserChecked = true;
-      let params = {
-        qdTime: this.qdTime,
-        lianxuqiandao: this.lianxuqiandao,
-      };
-      let func='getUserChecked';
-      api[func](params)
-          .then(
-              (res) => {
-                this.qdTime = res.data.qdTime;
-                this.lianxuqiandao = res.data.lianxuqiandao;
-              },
-          );
+      // let params = {
+      //   qdTime: this.qdTime,
+      //   lianxuqiandao: this.lianxuqiandao,
+      // };
+      // let func='getUserChecked';
+      // api[func](params)
+      //     .then(
+      //         (res) => {
+      //           this.qdTime = res.data.qdTime;
+      //           this.lianxuqiandao = res.data.lianxuqiandao;
+      //         },
+      //     );
     },
     getMessageBox() {
       this.$prompt('请输入一言（50字内）','提示', {
