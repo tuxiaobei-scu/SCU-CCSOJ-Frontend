@@ -209,45 +209,69 @@
           (submission.code && submission.cid!=0)
       "
     >
-      <el-col :span="24" style="margin-top: 13px;" v-if="submission.code">
-        <Highlight
-          :code="submission.code"
-          :language="submission.language"
-          :border-color.sync="status.color"
-        ></Highlight>
-      </el-col>
-      <el-col :span="24">
-        <div id="share-btn">
-          <el-button
-            type="primary"
-            icon="el-icon-document-copy"
-            size="large"
-            @click="doCopy"
-            v-if="submission.code"
-            >{{ $t('m.Copy') }}</el-button
-          >
-          <template v-if="codeShare && isSubmissionOwner">
+      <template v-if="!submission.submitAns">
+        <el-col :span="24" style="margin-top: 13px;" v-if="submission.code">
+          <Highlight
+            :code="submission.code"
+            :language="submission.language"
+            :border-color.sync="status.color"
+          ></Highlight>
+        </el-col>
+        <el-col :span="24">
+          <div id="share-btn">
             <el-button
-              v-if="submission.share"
-              type="warning"
-              size="large"
-              icon="el-icon-circle-close"
-              @click="shareSubmission(false)"
-            >
-              {{ $t('m.Unshared') }}
-            </el-button>
-            <el-button
-              v-else-if="!submission.share"
               type="primary"
+              icon="el-icon-document-copy"
               size="large"
-              icon="el-icon-share"
-              @click="shareSubmission(true)"
+              @click="doCopy"
+              v-if="submission.code"
+              >{{ $t('m.Copy') }}</el-button
             >
-              {{ $t('m.Shared') }}
-            </el-button>
-          </template>
-        </div>
-      </el-col>
+            <template v-if="codeShare && isSubmissionOwner">
+              <el-button
+                v-if="submission.share"
+                type="warning"
+                size="large"
+                icon="el-icon-circle-close"
+                @click="shareSubmission(false)"
+              >
+                {{ $t('m.Unshared') }}
+              </el-button>
+              <el-button
+                v-else-if="!submission.share"
+                type="primary"
+                size="large"
+                icon="el-icon-share"
+                @click="shareSubmission(true)"
+              >
+                {{ $t('m.Shared') }}
+              </el-button>
+            </template>
+          </div>
+        </el-col>
+      </template>
+      <template v-else>
+        <el-col :span="24" style="margin-top: 13px;">
+          <el-collapse accordion>
+            <el-collapse-item
+                v-for="(flag, index) in submission.submitAnsData"
+                style="min-height: 60px"
+                >
+              <template slot="title">
+                <el-col :span="24" >
+                  <p class="panel-title home-title">{{ 'Flag' + index }}</p>
+                </el-col>
+              </template>
+              <Highlight
+                  :code="flag.data"
+                  :language="text"
+                  :border-color.sync="status.color"
+              ></Highlight>
+
+            </el-collapse-item>
+          </el-collapse>
+        </el-col>
+      </template>
     </template>
   </el-row>
 </template>
@@ -280,6 +304,8 @@ export default {
         language: '',
         author: '',
         errorMessage: '',
+        submitAns: false,
+        submitAnsData: [],
         share: true,
       },
       tableData: [],
@@ -384,6 +410,9 @@ export default {
             data.submission.displayPid = this.$route.params.problemID;
           }
           this.submission = data.submission;
+          if (this.submission.submitAns && this.submission.submitAnsData) {
+            this.submission.submitAnsData = JSON.parse(this.submission.submitAnsData);
+          }
           this.tableData = [data.submission];
           if (data.submission.cid != 0) {
             // 比赛的提交不可分享

@@ -38,7 +38,7 @@
           type="textarea"
           :rows="8"
           id="own-textarea"
-          :placeholder="$t('m.Come_and_write_down_your_comments') + '~😘'"
+          :placeholder="did == 1 ? $t('m.What_s_new_you_want_to_tell_everyone') + '~😘': $t('m.Come_and_write_down_your_comments') + '~😘'"
         >
         </el-input>
         <div class="input-bottom">
@@ -158,7 +158,7 @@
           <span class="own-btn-comment">
             <el-button class="btn" type="primary" round @click="commitComment"
               ><i class="el-icon-edit">
-                {{ $t('m.Submit_Comment') }}</i
+                {{ did == 1? $t('m.Submit_BenBen') : $t('m.Submit_Comment')}}</i
               ></el-button
             >
           </span>
@@ -166,7 +166,7 @@
       </div>
       <h3 class="comment-total">
         <div class="text">
-          <span>{{ $t('m.All_Comment') }}</span
+          <span>{{ did == 1? $t('m.All_Benben') : $t('m.All_Comment') }}</span
           ><span class="number">{{ totalComment }}</span>
         </div>
       </h3>
