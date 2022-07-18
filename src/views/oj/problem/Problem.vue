@@ -250,39 +250,37 @@
 <!--                  </el-dialog>-->
                       <el-button text @click="confirmVisible = true"
                       >{{$t('m.Hint')}}</el-button>
+                       <el-dialog
+                      :title="$t('m.Hint')"
+                      :visible.sync="confirmVisible"
+                      width="30%"
+                  >
+                    <p
+                        class="content markdown-body"
+                        v-html="$t('m.Get_Hint_Warning')"
+                        v-katex
+                        v-highlight
+                    ></p>
+                    <el-button text @click="changeRP"
+                    >{{$t('m.Confirm')}}</el-button>
 
-                      <el-dialog
-                          :title="$t('m.Hint')"
-                          :visible.sync="confirmVisible"
-                          width="30%"
-                      >
-                        <p
-                            class="content markdown-body"
-                            v-html="$t('m.Get_Hint_Warning')"
-                            v-katex
-                            v-highlight
-                        ></p>
-                          <el-button text @click="changeRP"
-                          >{{$t('m.Confirm')}}</el-button>
+                  </el-dialog>
 
-                          <el-dialog
-                              :title="$t('m.Hint')"
-                              :visible.sync="dialogVisible"
-                              width="30%"
-                          >
-                            <p
-                                class="content markdown-body"
-                                v-html="hint"
-                                v-katex
-                                v-highlight
-                            ></p>
-                            <span slot="footer" class="dialog-footer">
+                  <el-dialog
+                      :title="$t('m.Hint')"
+                      :visible.sync="dialogVisible"
+                      width="30%"
+                  >
+                    <p
+                        class="content markdown-body"
+                        v-html="hint"
+                        v-katex
+                        v-highlight
+                    ></p>
+                    <span slot="footer" class="dialog-footer">
                             <el-button type="primary" @click="dialogVisible = false, confirmVisible = false">确 定</el-button>
                           </span>
-                        </el-dialog>
-
-
-                      </el-dialog>
+                  </el-dialog>
 
 
 
@@ -994,6 +992,7 @@ export default {
       captchaCode: '',
       captchaSrc: '',
       contestID: 0,
+      msg:'',
       groupID: null,
       dialogVisible: false,
       confirmVisible: false,
@@ -1107,6 +1106,7 @@ export default {
     },
 
     changeRP() {
+      this.dialogVisible = true
       let params = {
         problemId: this.problemID,
       };
@@ -1114,7 +1114,7 @@ export default {
       api[func](params)
           .then(
               (res) => {
-                this.hint = res.data;
+                this.hint = res.data.msg;
               },
               );
       this.dialogVisible = true
