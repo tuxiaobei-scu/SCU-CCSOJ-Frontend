@@ -29,9 +29,7 @@
               <p>
                 <a @click="goRoute('/status')">{{ $t('m.Judging_Queue') }}</a>
               </p>
-              <p>
-                <a @click="goRoute('/developer')">{{ $t('m.System_Info') }}</a>
-              </p>
+
             </el-col>
             <el-col class="hr-none">
               <el-divider></el-divider>

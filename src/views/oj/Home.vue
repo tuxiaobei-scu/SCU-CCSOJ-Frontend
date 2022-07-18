@@ -29,52 +29,11 @@
           </el-carousel>
         </el-card>
         <Announcements class="card-top"></Announcements>
-        <el-card class="card-top">
-          <div slot="header" class="clearfix">
-            <span class="panel-title home-title">{{
-              $t('m.Other_OJ_Contest')
-            }}</span>
-          </div>
-          <vxe-table
-            border="inner"
-            highlight-hover-row
-            stripe
-            :loading="loading.recentOtherContestsLoading"
-            auto-resize
-            :data="otherContests"
-            @cell-click="goOtherOJContest"
-          >
-            <vxe-table-column
-              field="oj"
-              :title="$t('m.Recent_Contest')"
-              min-width="150"
-              show-overflow
-              header-align="center"
-            >
-              <template v-slot="{ row }">
-                <span>[{{ row.oj }}] {{ row.title }}</span>
-              </template>
-            </vxe-table-column>
-            <vxe-table-column
-              field="beginTime"
-              :title="$t('m.Contest_Time')"
-              show-overflow
-              min-width="150"
-              align="center"
-            >
-              <template v-slot="{ row }">
-                <span
-                  >{{ row.beginTime | localtime }} ~
-                  {{ row.endTime | localtime }}</span
-                >
-              </template>
-            </vxe-table-column>
-          </vxe-table>
-        </el-card>
+
 
         <el-card class="card-top">
           <div slot="header" class="clearfix">
-            <span class="panel-title home-title">犇犇</span>
+            <span class="panel-title home-title">{{ $t("m.Benben") }}</span>
           </div>
           <comment :did="1"></comment>
         </el-card>
@@ -307,7 +266,7 @@
               {{ $t('m.Motto') }}
             </span>
            <template>
-             <el-button class="mottobutton" type="primary" round @click="getMessageBox">提交按钮</el-button>
+             <el-button class="mottobutton" type="primary" round @click="getMessageBox">{{ $t('m.Submit_motto') }}</el-button>
            </template>
           </div>
           {{ hitokoto }}
